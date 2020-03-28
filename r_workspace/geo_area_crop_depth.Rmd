@@ -1,0 +1,143 @@
+---
+title: "Geographical Area and Crop Type by Depth"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+library(tidyverse)
+library(ggpubr)
+}))
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+Removing <b>Lucho-Constantino et al. 2005</b>. This datapoint was enormously different to all other studies, and is statistically an outlier. The OC value changes throughout the course of this study are more than 10x those of any other study. While the study plot for this study is irrigated with wastewater, other studies including wastewater irrigation are still nowhere near this high.
+
+
+```{r}
+# Remove huge outlier
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+```
+
+
+```{r}
+# Split datasset by geographical area
+X <- dataset %>% group_split(geo_area)
+africa <- as.data.frame(X[1])
+asia <- as.data.frame(X[2])
+europe <- as.data.frame(X[3])
+middle_east <- as.data.frame(X[4])
+north_america <- as.data.frame(X[5])
+oceania <- as.data.frame(X[6])
+south_america <- as.data.frame(X[7])
+```
+
+
+
+# Crop Type by Depth
+## <b>Organic Carbon Change Rate</b>
+
+```{r}
+p1 <- ggboxplot(africa, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Africa")
+p1 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p2 <- ggboxplot(asia, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Asia")
+p2 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p3 <- ggboxplot(europe, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Europe")
+p3 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p4 <- ggboxplot(middle_east, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Middle East")
+p4 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p5 <- ggboxplot(north_america, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="North America")
+p5 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p6 <- ggboxplot(oceania, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Oceania")
+p6 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p7 <- ggboxplot(south_america, x="crop_type", y="OC_change_rate", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="South America")
+p7 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+
+## <b>Organic Carbon Change Rate</b>
+
+```{r}
+p8 <- ggboxplot(africa, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Africa")
+p8 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p9 <- ggboxplot(asia, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Asia")
+p9 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p10 <- ggboxplot(europe, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Europe")
+p10 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p11 <- ggboxplot(middle_east, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Middle East")
+p11 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p12 <- ggboxplot(north_america, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="North America")
+p12 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p13 <- ggboxplot(oceania, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Oceania")
+p13 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+p14 <- ggboxplot(south_america, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="South America")
+p14 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```

@@ -1,0 +1,195 @@
+---
+title: "Geographical Area OC by Aridity Index Per Change"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+library(tidyverse)
+library(ggpubr)
+}))
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+Removing <b>Lucho-Constantino et al. 2005</b>. This datapoint was enormously different to all other studies, and is statistically an outlier. The OC value changes throughout the course of this study are more than 10x those of any other study. While the study plot for this study is irrigated with wastewater, other studies including wastewater irrigation are still nowhere near this high.
+
+
+```{r}
+# Remove huge outlier
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+```
+
+```{r}
+# Split dataset by geographical area
+X <- dataset %>% group_split(geo_area)
+africa <- as.data.frame(X[1])
+asia <- as.data.frame(X[2])
+europe <- as.data.frame(X[3])
+middle_east <- as.data.frame(X[4])
+north_america <- as.data.frame(X[5])
+oceania <- as.data.frame(X[6])
+south_america <- as.data.frame(X[7])
+```
+
+```{r}
+# Split Africa dataset by Depth
+Af_D <- africa %>% group_split(depth_cat_2)
+af_d10 <- as.data.frame(Af_D[1])
+af_d20 <- as.data.frame(Af_D[2])
+af_d30 <- as.data.frame(Af_D[3])
+af_d30p <- as.data.frame(Af_D[4])
+```
+
+```{r}
+# Split Asia dataset by Depth
+As_D <- asia %>% group_split(depth_cat_2)
+as_d10 <- as.data.frame(As_D[1])
+as_d20 <- as.data.frame(As_D[2])
+as_d30 <- as.data.frame(As_D[3])
+as_d30p <- as.data.frame(As_D[4])
+```
+
+```{r}
+# Split Europe dataset by Depth
+E_D <- europe %>% group_split(depth_cat_2)
+e_d10 <- as.data.frame(E_D[1])
+e_d20 <- as.data.frame(E_D[2])
+e_d30 <- as.data.frame(E_D[3])
+e_d30p <- as.data.frame(E_D[4])
+```
+
+```{r}
+# Split Middle East dataset by Depth
+ME_D <- middle_east %>% group_split(depth_cat_2)
+me_d10 <- as.data.frame(ME_D[1])
+me_d20 <- as.data.frame(ME_D[2])
+me_d30 <- as.data.frame(ME_D[3])
+me_d30p <- as.data.frame(ME_D[4])
+```
+
+```{r}
+# Split North America dataset by Depth
+NA_D <- north_america %>% group_split(depth_cat_2)
+na_d10 <- as.data.frame(NA_D[1])
+na_d20 <- as.data.frame(NA_D[2])
+na_d30 <- as.data.frame(NA_D[3])
+na_d30p <- as.data.frame(NA_D[4])
+```
+
+```{r}
+# Split Oceania dataset by Depth
+O_D <- oceania %>% group_split(depth_cat_2)
+o_d10 <- as.data.frame(O_D[1])
+o_d20 <- as.data.frame(O_D[2])
+o_d30 <- as.data.frame(O_D[3])
+o_d30p <- as.data.frame(O_D[4])
+```
+
+```{r}
+# Split South America dataset by Depth
+SA_D <- south_america %>% group_split(depth_cat_2)
+sa_d10 <- as.data.frame(SA_D[1])
+sa_d20 <- as.data.frame(SA_D[2])
+sa_d30 <- as.data.frame(SA_D[3])
+sa_d30p <- as.data.frame(SA_D[4])
+```
+
+
+# Africa
+
+```{r}
+ggplot(africa, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(af_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(af_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+#ggplot(af_d30, aes(x=aridity_index, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change") No data at this depth
+#ggplot(af_d30p, aes(x=aridity_index, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change") No data at this depth
+```
+
+# Asia
+
+```{r}
+ggplot(asia, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(as_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Changee 0 - 10 cm")
+ggplot(as_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(as_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+ggplot(as_d30p, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 30+ cm")
+```
+
+# Europe
+
+```{r}
+ggplot(europe, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(e_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(e_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(e_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+ggplot(e_d30p, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 30+ cm")
+```
+
+# Middle East
+
+```{r}
+ggplot(middle_east, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(me_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(me_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(me_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+ggplot(me_d30p, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 30+ cm")
+```
+
+# North America
+
+```{r}
+ggplot(north_america, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(na_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(na_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(na_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+ggplot(na_d30p, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 30+ cm")
+```
+
+# Oceania
+
+```{r}
+ggplot(oceania, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(o_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(o_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(o_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+#ggplot(o_d30p, aes(x=aridity_index, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change") No data at this depth
+```
+
+# South America
+
+```{r}
+ggplot(south_america, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change - All Depths")
+ggplot(sa_d10, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 0 - 10 cm")
+ggplot(sa_d20, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 10 - 20 cm")
+ggplot(sa_d30, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 20 - 30 cm")
+#ggplot(sa_d30p, aes(x=aridity_index, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Aridity Index by Percent OC Change 30+ cm") No data at this depth
+```
+
