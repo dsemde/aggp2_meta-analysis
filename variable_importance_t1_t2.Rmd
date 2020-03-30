@@ -1,0 +1,230 @@
+---
+title: "Variable Importance T1 vs. T2"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+    library(tidyverse)
+    library(gbm)
+    library(rsample)
+    library(missForest)
+    library(metaforest)
+}))
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+```
+
+```{r}
+# Remove N+ studies where both N+ and N- plots were included
+da <- subset(dataset, N_pair=="no")
+db <- subset(dataset, N_pair_state=="N+")
+d <- rbind(da, db)
+
+# Separate datset into depth categories
+d10 <- subset(d, depth_cat_2=="0-10cm")
+
+d20 <- subset(d, depth_cat_2=="10-20cm")
+
+d30 <- subset(d, depth_cat_2=="20-30cm")
+
+d30p <- subset(d, depth_cat_2=="30+cm")
+```
+
+```{r}
+vars_rr <- c("log_organic_C_rr", "elev_raster", "precip_raster", "temp_raster", "aridity_index", "crop_type", "multiple_crops", "tillage_freq", "tillage_type", "residue_removal", "grazed", "inorganic_N_applied", "herbicide", "OM_applied", "inorganic_C_applied", "years_since_irrig_t1", "study_duration", "irrig_method_cat", "irrig_water_type", "per_clay_t1", "per_sand_t1", "soil_pH_t1", "total_N_t1")
+vars_change_rate <- c("OC_change_rate", "elev_raster", "precip_raster", "temp_raster", "aridity_index", "crop_type", "multiple_crops", "tillage_freq", "tillage_type", "residue_removal", "grazed", "inorganic_N_applied", "herbicide", "OM_applied", "inorganic_C_applied", "years_since_irrig_t1", "study_duration", "irrig_method_cat", "irrig_water_type", "per_clay_t1", "per_sand_t1", "soil_pH_t1", "total_N_t1")
+vars_per_change <- c("per_OC_change", "elev_raster", "precip_raster", "temp_raster", "aridity_index", "crop_type", "multiple_crops", "tillage_freq", "tillage_type", "residue_removal", "grazed", "inorganic_N_applied", "herbicide", "OM_applied", "inorganic_C_applied", "years_since_irrig_t1", "study_duration", "irrig_method_cat", "irrig_water_type", "per_clay_t1", "per_sand_t1", "soil_pH_t1", "total_N_t1")
+```
+
+
+# 0 - 10 cm Depth Category
+
+```{r}
+# Select only the columns we're interested in
+d10.rr.subset <- d10[names(d10) %in% vars_rr]
+d10.cr.subset <- d10[names(d10) %in% vars_change_rate]
+d10.pc.subset <- d10[names(d10) %in% vars_per_change]
+
+#d10.subset$log_organic_C_rr <- na.roughfix(d10$log_organic_C_rr)
+
+# Make training and testing set
+set.seed(12)
+split <- initial_split(d10.rr.subset, prop = .7)
+train <- training(split)
+test  <- testing(split)
+```
+
+Test a variety of tuning parameters to see what performs best:
+```{r}
+# create hyperparameter grid
+hyper_grid <- expand.grid(
+  shrinkage = c(.0001, .01, .001),
+  interaction.depth = c(1, 3, 6),
+  n.minobsinnode = c(3, 5, 7),
+  bag.fraction = c(.65, .8, 1), 
+  optimal_trees = 0,               # a place to dump results
+  min_RMSE = 0                     # a place to dump results
+)
+```
+
+```{r}
+# randomize data
+set.seed(12)
+random_index <- sample(1:nrow(train), nrow(train))
+random_train <- train[random_index, ]
+
+# grid search 
+for(i in 1:nrow(hyper_grid)) {
+  
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.tune <- gbm(
+    formula = log_organic_C_rr ~ .,
+    distribution = "gaussian",
+    data = random_train,
+    n.trees = 10000,
+    interaction.depth = hyper_grid$interaction.depth[i],
+    shrinkage = hyper_grid$shrinkage[i],
+    n.minobsinnode = hyper_grid$n.minobsinnode[i],
+    bag.fraction = hyper_grid$bag.fraction[i],
+    train.fraction = .75,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+  
+  # add min training error and trees to grid
+  hyper_grid$optimal_trees[i] <- which.min(gbm.tune$valid.error)
+  hyper_grid$min_RMSE[i] <- sqrt(min(gbm.tune$valid.error))
+}
+
+hyper_grid %>% 
+  dplyr::arrange(min_RMSE) %>%
+  head(10)
+```
+
+# Results of the best model (from above)
+
+```{r}
+#set.seed(1223)
+#d10test <- missForest(d10.subset)
+#d10test <- as.data.frame(d10test$ximp)
+
+#temp <- na.roughfix(d10.subset)
+
+#d10.rr.subset$log_organic_C_rr <- temp$log_organic_C_rr
+#d10.cr.subset$OC_change_rate <- temp$OC_change_rate
+```
+
+## Using the OC Response Ratio as the response variable
+
+```{r}
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.fit.rr <- gbm(
+    formula = log_organic_C_rr ~ .,
+    distribution = "gaussian",
+    data = d10.rr.subset,
+    n.trees = 1000,
+    interaction.depth = 3,
+    shrinkage = 0.01,
+    n.minobsinnode = 7,
+    bag.fraction = 0.8,
+    train.fraction = 1,
+    cv.folds = 5,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+```
+
+```{r}
+par(mar = c(5, 8, 1, 1))
+summary(
+  gbm.fit.rr, 
+  cBars = 19,
+  method = relative.influence, # also can use permutation.test.gbm
+  las = 2
+  )
+```
+
+## Using the OC Change Rate as the response variable
+
+```{r}
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.fit.cr <- gbm(
+    formula = OC_change_rate ~ .,
+    distribution = "gaussian",
+    data = d10.cr.subset,
+    n.trees = 1000,
+    interaction.depth = 3,
+    shrinkage = 0.01,
+    n.minobsinnode = 7,
+    bag.fraction = 0.8,
+    train.fraction = 1,
+    cv.folds = 5,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+```
+
+```{r}
+par(mar = c(5, 8, 1, 1))
+summary(
+  gbm.fit.cr, 
+  cBars = 19,
+  method = relative.influence, # also can use permutation.test.gbm
+  las = 2
+  )
+```
+
+## Using percent change as the response variable
+
+```{r}
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.fit.pc <- gbm(
+    formula = per_OC_change ~ .,
+    distribution = "gaussian",
+    data = d10.pc.subset,
+    n.trees = 1000,
+    interaction.depth = 3,
+    shrinkage = 0.01,
+    n.minobsinnode = 7,
+    bag.fraction = 0.8,
+    train.fraction = 1,
+    cv.folds = 5,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+```
+
+```{r}
+par(mar = c(5, 8, 1, 1))
+summary(
+  gbm.fit.pc, 
+  cBars = 19,
+  method = relative.influence, # also can use permutation.test.gbm
+  las = 2
+  )
+```

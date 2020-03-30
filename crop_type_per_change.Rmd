@@ -1,0 +1,156 @@
+---
+title: "Crop Type by OC Change (%)"
+output:
+  html_document:
+    df_print: paged
+---
+
+Look for potential differences in OC (%) by crop type category
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    library(tidyverse)
+    library(ggpubr)
+}))
+```
+
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There is a massive outlier in the dataset, 10x the change in OC seen in any other study.  This row of data has been removed from the dataset
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Separate out the 0 - 10 cm depth incrememt
+tempData2 <- split(dataset, dataset$depth_cat_2=="0-10cm")
+depth_10 <- tempData2$'TRUE'
+
+# Separate out the 10 - 20 cm depth incrememt
+tempData2 <- split(dataset, dataset$depth_cat_2=="10-20cm")
+depth_20 <- tempData2$'TRUE'
+
+# Separate out the 20 - 30 cm depth incrememt
+tempData2 <- split(dataset, dataset$depth_cat_2=="20-30cm")
+depth_30 <- tempData2$'TRUE'
+
+# Separate out the 30+ cm depth incrememt
+tempData2 <- split(dataset, dataset$depth_cat_2=="30+cm")
+depth_30p <- tempData2$'TRUE'
+```
+
+
+## 0 - 10 cm Depth Increment
+
+```{r}
+# Boxplot to visualize the average percent change for each crop type category
+p <- ggboxplot(depth_10, x="crop_type", y="per_OC_change", 
+          #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
+p + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+```{r}
+aov_0_10_per_C <- aov(per_OC_change ~ crop_type, data = depth_10)
+summary(aov_0_10_per_C)
+plot(aov_0_10_per_C, 2)
+
+TukeyHSD(aov_0_10_per_C)
+```
+
+
+## 10 - 20 cm Depth Increment
+
+```{r}
+# Boxplot to visualize the average percent change for each crop type category
+p2 <- ggboxplot(depth_20, x="crop_type", y="per_OC_change", 
+          #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
+p2 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+
+```{r}
+aov_10_20_per_C <- aov(per_OC_change ~ crop_type, data = depth_20)
+summary(aov_10_20_per_C)
+plot(aov_10_20_per_C, 2)
+
+TukeyHSD(aov_10_20_per_C)
+```
+
+
+## 20 - 30 cm Depth Increment
+
+```{r}
+# Boxplot to visualize the average percent change for each crop type category
+p3 <- ggboxplot(depth_30, x="crop_type", y="per_OC_change", 
+          #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
+p3 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+
+```{r}
+aov_20_30_per_C <- aov(per_OC_change ~ crop_type, data = depth_30)
+summary(aov_20_30_per_C)
+plot(aov_20_30_per_C, 2)
+
+TukeyHSD(aov_20_30_per_C)
+```
+
+
+## 30+ cm Depth Increment
+```{r}
+# Boxplot to visualize the average percent change for each crop type category
+p4 <- ggboxplot(depth_30p, x="crop_type", y="per_OC_change", 
+          #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
+p4 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+```{r}
+aov_30p_per_C <- aov(per_OC_change ~ crop_type, data = depth_30p)
+summary(aov_30p_per_C)
+plot(aov_30p_per_C, 2)
+
+TukeyHSD(aov_30p_per_C)
+```
+
+
+## All Depths
+
+```{r}
+# Boxplot to visualize the average percent change for each crop type category
+p5 <- ggboxplot(dataset, x="crop_type", y="per_OC_change", 
+          color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
+p5 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
