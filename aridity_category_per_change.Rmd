@@ -67,6 +67,34 @@ tempData2 <- split(dataset, dataset$depth_cat_2=="30+cm")
 depth_30p <- tempData2$'TRUE'
 ```
 
+```{r}
+# function for number of observations 
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+}
+
+# function for mean labels
+mean.n <- function(x){
+  return(c(y = median(x)*0.97, label = round(mean(x),2))) 
+  # experiment with the multiplier to find the perfect position
+}
+```
+
+```{r}
+# function for number of observations 
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+}
+
+# function for mean labels
+mean.n <- function(x){
+  return(c(y = median(x)*0.97, label = round(mean(x),2))) 
+  # experiment with the multiplier to find the perfect position
+}
+```
+
 
 ## 0 - 10 cm Depth Increment
 
@@ -76,7 +104,7 @@ p <- ggboxplot(depth_10, x="aridity_category", y="per_OC_change",
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           order = c("Hyper Arid", "Arid", "Semi-Arid", "Dry sub-humid", "Humid"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Aridity Category")
-p + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -97,7 +125,7 @@ p2 <- ggboxplot(depth_20, x="aridity_category", y="per_OC_change",
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           order = c("Hyper Arid", "Arid", "Semi-Arid", "Dry sub-humid", "Humid"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Aridity Category")
-p2 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p2 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -119,7 +147,7 @@ p3 <- ggboxplot(depth_30, x="aridity_category", y="per_OC_change",
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           order = c("Hyper Arid", "Arid", "Semi-Arid", "Dry sub-humid", "Humid"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Aridity Category")
-p3 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p3 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -140,7 +168,7 @@ p4 <- ggboxplot(depth_30p, x="aridity_category", y="per_OC_change",
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           order = c("Hyper Arid", "Arid", "Semi-Arid", "Dry sub-humid", "Humid"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Aridity Category")
-p4 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p4 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -161,6 +189,6 @@ p5 <- ggboxplot(dataset, x="aridity_category", y="per_OC_change",
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           order = c("Hyper Arid", "Arid", "Semi-Arid", "Dry sub-humid", "Humid"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Aridity Category")
-p5 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p5 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 

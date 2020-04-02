@@ -1,0 +1,116 @@
+---
+title: "OC by Clay Content"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+library(tidyverse)
+library(ggpubr)
+}))
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_cat_2)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+
+# Change Rate
+## 0 - 10 cm 
+
+```{r}
+ggplot(d10, aes(x=per_clay_t1, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("OC Change Rate by Clay Content at 0 - 10 cm")
+```
+
+
+## 10 - 20 cm 
+
+```{r}
+ggplot(d20, aes(x=per_clay_t1, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("OC Change Rate by Clay Content at 10 - 20 cm")
+```
+
+
+## 20 - 30 cm 
+
+```{r}
+ggplot(d30, aes(x=per_clay_t1, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("OC Change Rate by Clay Content at 20 - 30 cm")
+```
+
+
+## 30+ cm 
+
+```{r}
+ggplot(d30p, aes(x=per_clay_t1, y=OC_change_rate)) + geom_point() + geom_smooth(method=lm) + ggtitle("OC Change Rate by Clay Content at 30+ cm")
+```
+
+
+
+# Percent OC Change
+## 0 - 10 cm 
+
+```{r}
+ggplot(d10, aes(x=per_clay_t1, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Percept OC Change by Clay Content at 0 - 10 cm")
+```
+
+
+## 10 - 20 cm 
+
+```{r}
+ggplot(d20, aes(x=per_clay_t1, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Percept OC Change by Clay Content at 10 - 20 cm")
+```
+
+
+## 20 - 30 cm 
+
+```{r}
+ggplot(d30, aes(x=per_clay_t1, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Percept OC Change by Clay Content at 20 - 30 cm")
+```
+
+
+## 30+ cm 
+
+```{r}
+ggplot(d30p, aes(x=per_clay_t1, y=per_OC_change)) + geom_point() + geom_smooth(method=lm) + ggtitle("Percept OC Change by Clay Content at 30+ cm")
+```
+

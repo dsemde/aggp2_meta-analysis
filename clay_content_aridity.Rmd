@@ -1,0 +1,66 @@
+---
+title: "Clay Content and Aridity Index"
+output: html_notebook
+---
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_cat_2)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+```{r}
+# Separate dataset by clay values above and below median clay value
+med <- median(d10$per_clay_t1, na.rm = TRUE)
+
+tempD10 <- split(d10, d10$per_clay_t1>=med)
+d10_above_med <- tempD10$'TRUE'
+d10_below_med <- tempD10$'FALSE'
+```
+
+
+
+# Change Rate
+## 0 - 10 cm 
+
+```{r}
+ggplot(d10, aes(x=aridity_index)) + 
+  geom_point(aes(y = d10_above_med$OC_change_rate), color = "#00AFBB") + 
+  geom_point(aes(y = d10_below_med$OC_change_rate), color = "#E7B800")
+```

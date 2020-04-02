@@ -60,7 +60,19 @@ oceania <- as.data.frame(X[6])
 south_america <- as.data.frame(X[7])
 ```
 
+```{r}
+# function for number of observations 
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+}
 
+# function for mean labels
+mean.n <- function(x){
+  return(c(y = median(x)*0.97, label = round(mean(x),2))) 
+  # experiment with the multiplier to find the perfect position
+}
+```
 
 # Crop Type by Depth
 ## <b>Organic Carbon Change Rate</b>
@@ -69,37 +81,37 @@ south_america <- as.data.frame(X[7])
 p1 <- ggboxplot(africa, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Africa")
-p1 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p1 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p2 <- ggboxplot(asia, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Asia")
-p2 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p2 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p3 <- ggboxplot(europe, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Europe")
-p3 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p3 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p4 <- ggboxplot(middle_east, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Middle East")
-p4 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p4 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p5 <- ggboxplot(north_america, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="North America")
-p5 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p5 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p6 <- ggboxplot(oceania, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="Oceania")
-p6 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p6 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p7 <- ggboxplot(south_america, x="crop_type", y="OC_change_rate", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change Rate", xlab = "Crop Type", main="South America")
-p7 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p7 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.2)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 
@@ -109,35 +121,35 @@ p7 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 p8 <- ggboxplot(africa, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Africa")
-p8 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p8 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p9 <- ggboxplot(asia, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Asia")
-p9 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p9 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p10 <- ggboxplot(europe, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Europe")
-p10 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p10 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p11 <- ggboxplot(middle_east, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Middle East")
-p11 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p11 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p12 <- ggboxplot(north_america, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="North America")
-p12 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p12 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p13 <- ggboxplot(oceania, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="Oceania")
-p13 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p13 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 p14 <- ggboxplot(south_america, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change (%)", xlab = "Crop Type", main="South America")
-p14 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p14 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```

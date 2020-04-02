@@ -67,6 +67,20 @@ tempData2 <- split(dataset, dataset$depth_cat_2=="30+cm")
 depth_30p <- tempData2$'TRUE'
 ```
 
+```{r}
+# function for number of observations 
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+}
+
+# function for mean labels
+mean.n <- function(x){
+  return(c(y = median(x)*0.97, label = round(mean(x),2))) 
+  # experiment with the multiplier to find the perfect position
+}
+```
+
 
 ## 0 - 10 cm Depth Increment
 
@@ -75,7 +89,7 @@ depth_30p <- tempData2$'TRUE'
 p <- ggboxplot(depth_10, x="crop_type", y="per_OC_change", 
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
-p + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -94,7 +108,7 @@ TukeyHSD(aov_0_10_per_C)
 p2 <- ggboxplot(depth_20, x="crop_type", y="per_OC_change", 
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
-p2 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p2 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 
@@ -114,7 +128,7 @@ TukeyHSD(aov_10_20_per_C)
 p3 <- ggboxplot(depth_30, x="crop_type", y="per_OC_change", 
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
-p3 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p3 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 
@@ -133,7 +147,7 @@ TukeyHSD(aov_20_30_per_C)
 p4 <- ggboxplot(depth_30p, x="crop_type", y="per_OC_change", 
           #color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
-p4 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p4 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 ```{r}
@@ -152,5 +166,5 @@ TukeyHSD(aov_30p_per_C)
 p5 <- ggboxplot(dataset, x="crop_type", y="per_OC_change", 
           color = "depth_cat_2", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
           ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Crop Type")
-p5 + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+p5 + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
