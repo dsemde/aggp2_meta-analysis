@@ -1,0 +1,417 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+  library(tidyverse)
+}))
+```
+
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_forest_plot.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+#dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Split dataset by Depth
+d <- dataset %>% group_split(depth_category)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+
+# ARIDITY GROUP
+```{r}
+# 0 - 10 cm Depth - ARIDITY
+tempData10 <- split(d10, d10$treatment=="Arid")
+d10_arid <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="Semi-Arid")
+d10_semi_arid <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="Humid")
+d10_humid <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="Dry sub-humid")
+d10_dry_sub_humid <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="Hyper Arid")
+d10_hyper_arid <- tempData10$'TRUE'
+```
+
+```{r}
+# 10 - 20 cm Depth - ARIDITY
+tempData20 <- split(d20, d20$treatment=="Arid")
+d20_arid <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="Semi-Arid")
+d20_semi_arid <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="Humid")
+d20_humid <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="Dry sub-humid")
+d20_dry_sub_humid <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="Hyper Arid")
+d20_hyper_arid <- tempData20$'TRUE'
+```
+
+```{r}
+# 20 - 30 cm Depth - ARIDITY
+tempData30 <- split(d30, d30$treatment=="Arid")
+d30_arid <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="Semi-Arid")
+d30_semi_arid <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="Humid")
+d30_humid <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="Dry sub-humid")
+d30_dry_sub_humid <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="Hyper Arid")
+d30_hyper_arid <- tempData30$'TRUE'
+```
+
+```{r}
+# 30+ cm Depth - ARIDITY
+tempData30p <- split(d30p, d30p$treatment=="Arid")
+d30p_arid <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="Semi-Arid")
+d30p_semi_arid <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="Humid")
+d30p_humid <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="Dry sub-humid")
+d30p_dry_sub_humid <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="Hyper Arid")
+d30p_hyper_arid <- tempData30p$'TRUE'
+```
+
+
+# IRRIGATION GROUP
+```{r}
+# 0 - 10 cm Depth - IRRIGATION
+tempData10 <- split(d10, d10$treatment=="drippers")
+d10_drip <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="sprinkler")
+d10_sprinkler <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="floodfurr")
+d10_flood <- tempData10$'TRUE'
+```
+
+```{r}
+# 10 - 20 cm Depth - IRRIGATION
+tempData20 <- split(d20, d20$treatment=="drippers")
+d20_drip <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="sprinkler")
+d20_sprinkler <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="floodfurr")
+d20_flood <- tempData20$'TRUE'
+```
+
+```{r}
+# 20 - 30 cm Depth - IRRIGATION
+tempData30 <- split(d30, d30$treatment=="drippers")
+d30_drip <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="sprinkler")
+d30_sprinkler <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="floodfurr")
+d30_flood <- tempData30$'TRUE'
+```
+
+```{r}
+# 30+ cm Depth - IRRIGATION
+tempData30p <- split(d30p, d30p$treatment=="drippers")
+d30p_drip <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="sprinkler")
+d30p_sprinkler <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="floodfurr")
+d30p_flood <- tempData30p$'TRUE'
+```
+
+
+
+# TEXTURE GROUP
+```{r}
+# 0 - 10 cm Depth - TEXTURE
+tempData10 <- split(d10, d10$treatment=="coarse")
+d10_coarse <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="medium")
+d10_medium <- tempData10$'TRUE'
+
+tempData10 <- split(d10, d10$treatment=="fine")
+d10_fine <- tempData10$'TRUE'
+```
+
+```{r}
+# 10 - 20 cm Depth - TEXTURE
+tempData20 <- split(d20, d20$treatment=="coarse")
+d20_coarse <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="medium")
+d20_medium <- tempData20$'TRUE'
+
+tempData20 <- split(d20, d20$treatment=="fine")
+d20_fine <- tempData20$'TRUE'
+```
+
+```{r}
+# 20 - 30 cm Depth - TEXTURE
+tempData30 <- split(d30, d30$treatment=="coarse")
+d30_coarse <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="medium")
+d30_medium <- tempData30$'TRUE'
+
+tempData30 <- split(d30, d30$treatment=="fine")
+d30_fine <- tempData30$'TRUE'
+```
+
+```{r}
+# 30+ cm Depth - TEXTURE
+tempData30p <- split(d30p, d30p$treatment=="coarse")
+d30p_coarse <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="medium")
+d30p_medium <- tempData30p$'TRUE'
+
+tempData30p <- split(d30p, d30p$treatment=="fine")
+d30p_fine <- tempData30p$'TRUE'
+```
+
+
+```{r}
+combinevar <- 
+function (xbar = NULL, s_squared = NULL, n = NULL) 
+{
+    if (length(xbar) != length(s_squared) | length(xbar) != length(n) | 
+        length(s_squared) != length(n)) 
+        stop("Vector lengths are different.")
+    sum_of_squares <- sum((n - 1) * s_squared + n * xbar^2)
+    grand_mean <- sum(n * xbar)/sum(n)
+    combined_var <- (sqrt((sum_of_squares - sum(n) * grand_mean^2)/(sum(n) - 
+        1)))/sqrt(sum(n))
+    return(c(grand_mean, combined_var))
+}
+```
+
+
+# ARIDITY - ARID
+```{r}
+t <- combinevar(d10_arid$per_OC_change, d10_arid$conc_sd, d10_arid$n)
+combined_dataset_full <- data.frame("Aridity", "arid", "0 - 10 cm", t[1], t[2])
+names(combined_dataset_full)<-c("group", "treatment", "depth_increment", "per_OC_change", "se")
+```
+
+```{r}
+t <- combinevar(d20_arid$per_OC_change, d20_arid$conc_sd, d20_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="arid", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_arid$per_OC_change, d30_arid$conc_sd, d30_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="arid", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_arid$per_OC_change, d30p_arid$conc_sd, d30p_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="arid", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# ARIDITY - SEMI-ARID
+```{r}
+t <- combinevar(d10_semi_arid$per_OC_change, d10_semi_arid$conc_sd, d10_semi_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="semi-arid", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_semi_arid$per_OC_change, d20_semi_arid$conc_sd, d20_semi_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="semi-arid", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_semi_arid$per_OC_change, d30_semi_arid$conc_sd, d30_semi_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="semi-arid", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_semi_arid$per_OC_change, d30p_semi_arid$conc_sd, d30p_semi_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="semi-arid", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# ARIDITY - DRY SUB-HUMID
+```{r}
+t <- combinevar(d10_dry_sub_humid$per_OC_change, d10_dry_sub_humid$conc_sd, d10_dry_sub_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="dry sub-humid", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_dry_sub_humid$per_OC_change, d20_dry_sub_humid$conc_sd, d20_dry_sub_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="dry sub-humid", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_dry_sub_humid$per_OC_change, d30_dry_sub_humid$conc_sd, d30_dry_sub_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="dry sub-humid", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_dry_sub_humid$per_OC_change, d30p_dry_sub_humid$conc_sd, d30p_dry_sub_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="dry sub-humid", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# ARIDITY - HUMID
+```{r}
+t <- combinevar(d10_humid$per_OC_change, d10_humid$conc_sd, d10_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="humid", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_humid$per_OC_change, d20_humid$conc_sd, d20_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="humid", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_humid$per_OC_change, d30_humid$conc_sd, d30_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="humid", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_humid$per_OC_change, d30p_humid$conc_sd, d30p_humid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="humid", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# ARIDITY - HYPER ARID
+```{r}
+t <- combinevar(d10_hyper_arid$per_OC_change, d10_hyper_arid$conc_sd, d10_hyper_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="hyper arid", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_hyper_arid$per_OC_change, d20_hyper_arid$conc_sd, d20_hyper_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="hyper arid", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_hyper_arid$per_OC_change, d30_hyper_arid$conc_sd, d30_hyper_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="hyper arid", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_hyper_arid$per_OC_change, d30p_hyper_arid$conc_sd, d30p_hyper_arid$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Aridity", treatment="hyper arid", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+
+
+
+# IRRIGATION - DRIPPERS
+```{r}
+t <- combinevar(d10_drip$per_OC_change, d10_drip$conc_sd, d10_drip$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="drippers", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_drip$per_OC_change, d20_drip$conc_sd, d20_drip$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="drippers", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_drip$per_OC_change, d30_drip$conc_sd, d30_drip$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="drippers", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_drip$per_OC_change, d30p_drip$conc_sd, d30p_drip$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="drippers", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# IRRIGATION - SPRINKLERS
+```{r}
+t <- combinevar(d10_sprinkler$per_OC_change, d10_sprinkler$conc_sd, d10_sprinkler$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="sprinkler", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_sprinkler$per_OC_change, d20_sprinkler$conc_sd, d20_sprinkler$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="sprinkler", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_sprinkler$per_OC_change, d30_sprinkler$conc_sd, d30_sprinkler$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="sprinkler", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_sprinkler$per_OC_change, d30p_sprinkler$conc_sd, d30p_sprinkler$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="sprinkler", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# IRRIGATION - FLOOD/FURROW
+```{r}
+t <- combinevar(d10_flood$per_OC_change, d10_flood$conc_sd, d10_flood$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="floodfurr", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_flood$per_OC_change, d20_flood$conc_sd, d20_flood$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="floodfurr", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_flood$per_OC_change, d30_flood$conc_sd, d30_flood$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="floodfurr", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_flood$per_OC_change, d30p_flood$conc_sd, d30p_flood$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Irrigation", treatment="floodfurr", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+
+# TEXTURE - COARSE
+```{r}
+t <- combinevar(d10_coarse$per_OC_change, d10_coarse$conc_sd, d10_coarse$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="coarse", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_coarse$per_OC_change, d20_coarse$conc_sd, d20_coarse$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="coarse", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_coarse$per_OC_change, d30_coarse$conc_sd, d30_coarse$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="coarse", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_coarse$per_OC_change, d30p_coarse$conc_sd, d30p_coarse$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="coarse", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# TEXTURE - MEDIUM
+```{r}
+t <- combinevar(d10_medium$per_OC_change, d10_medium$conc_sd, d10_medium$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="medium", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_medium$per_OC_change, d20_medium$conc_sd, d20_medium$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="medium", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_medium$per_OC_change, d30_medium$conc_sd, d30_medium$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="medium", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_medium$per_OC_change, d30p_medium$conc_sd, d30p_medium$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="medium", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```
+
+
+# TEXTURE - FINE
+```{r}
+t <- combinevar(d10_fine$per_OC_change, d10_fine$conc_sd, d10_fine$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="fine", depth_increment="0 - 10 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d20_fine$per_OC_change, d20_fine$conc_sd, d20_fine$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="fine", depth_increment="10 - 20 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30_fine$per_OC_change, d30_fine$conc_sd, d30_fine$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="fine", depth_increment="20 - 30 cm", per_OC_change=t[1], se=t[2]))
+
+t <- combinevar(d30p_fine$per_OC_change, d30p_fine$conc_sd, d30p_fine$n)
+combined_dataset_full <- rbind(combined_dataset_full, data.frame(group="Texture", treatment="fine", depth_increment="30+ cm", per_OC_change=t[1], se=t[2]))
+```

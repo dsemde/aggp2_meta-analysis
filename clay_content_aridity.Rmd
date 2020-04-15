@@ -47,20 +47,103 @@ d30p <- as.data.frame(d[4])
 
 ```{r}
 # Separate dataset by clay values above and below median clay value
-med <- median(d10$per_clay_t1, na.rm = TRUE)
+med10 <- median(d10$per_clay_t1, na.rm = TRUE)
+med20 <- median(d20$per_clay_t1, na.rm = TRUE)
+med30 <- median(d30$per_clay_t1, na.rm = TRUE)
+med30p <- median(d30p$per_clay_t1, na.rm = TRUE)
 
-tempD10 <- split(d10, d10$per_clay_t1>=med)
+
+tempD10 <- split(d10, d10$per_clay_t1>=med10)
 d10_above_med <- tempD10$'TRUE'
 d10_below_med <- tempD10$'FALSE'
+
+tempD20 <- split(d20, d20$per_clay_t1>=med20)
+d20_above_med <- tempD20$'TRUE'
+d20_below_med <- tempD20$'FALSE'
+
+tempD30 <- split(d30, d30$per_clay_t1>=med30)
+d30_above_med <- tempD30$'TRUE'
+d30_below_med <- tempD30$'FALSE'
+
+tempD30p <- split(d30p, d30p$per_clay_t1>=med30p)
+d30p_above_med <- tempD30p$'TRUE'
+d30p_below_med <- tempD30p$'FALSE'
+
+
+tempD10b <- split(d10, d10$per_clay_t1>="50")
+d10_above_50 <- tempD10b$'TRUE'
+d10_below_50 <- tempD10b$'FALSE'
+
+tempD20b <- split(d20, d20$per_clay_t1>="50")
+d20_above_50 <- tempD20b$'TRUE'
+d20_below_50 <- tempD20b$'FALSE'
+
+tempD30b <- split(d30, d30$per_clay_t1>="50")
+d30_above_50 <- tempD30b$'TRUE'
+d30_below_50 <- tempD30b$'FALSE'
+
+tempD30pb <- split(d30p, d30p$per_clay_t1>="50")
+d30p_above_50 <- tempD30pb$'TRUE'
+d30p_below_50 <- tempD30pb$'FALSE'
 ```
 
 
 
-# Change Rate
+# Change Rate 
 ## 0 - 10 cm 
 
 ```{r}
-ggplot(d10, aes(x=aridity_index)) + 
-  geom_point(aes(y = d10_above_med$OC_change_rate), color = "#00AFBB") + 
-  geom_point(aes(y = d10_below_med$OC_change_rate), color = "#E7B800")
+A = data.frame(x = d10_above_50$aridity_index,y=d10_above_50$OC_change_rate)
+B = data.frame(x = d10_below_50$aridity_index,y=d10_below_50$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at 50%")
+
+A = data.frame(x = d10_above_med$aridity_index,y=d10_above_med$OC_change_rate)
+B = data.frame(x = d10_below_med$aridity_index,y=d10_below_med$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at Median Clay Value")
 ```
+<b>Black</b> dots = values <b>above</b> 50%/median value.
+<b>Red dots</b> = values <b>below</b> 50%/median value.
+
+
+## 10 - 20 cm 
+
+```{r}
+A = data.frame(x = d20_above_50$aridity_index,y=d20_above_50$OC_change_rate)
+B = data.frame(x = d20_below_50$aridity_index,y=d20_below_50$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at 50%")
+
+A = data.frame(x = d20_above_med$aridity_index,y=d20_above_med$OC_change_rate)
+B = data.frame(x = d20_below_med$aridity_index,y=d20_below_med$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at Median Clay Value")
+```
+<b>Black</b> dots = values <b>above</b> 50%/median value.
+<b>Red dots</b> = values <b>below</b> 50%/median value.
+
+
+## 20 - 30 cm 
+
+```{r}
+A = data.frame(x = d30_above_50$aridity_index,y=d30_above_50$OC_change_rate)
+B = data.frame(x = d30_below_50$aridity_index,y=d30_below_50$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at 50%")
+
+A = data.frame(x = d30_above_med$aridity_index,y=d30_above_med$OC_change_rate)
+B = data.frame(x = d30_below_med$aridity_index,y=d30_below_med$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at Median Clay Value")
+```
+<b>Black</b> dots = values <b>above</b> 50%/median value.
+<b>Red dots</b> = values <b>below</b> 50%/median value.
+
+## 30+ cm 
+
+```{r}
+A = data.frame(x = d30p_above_50$aridity_index,y=d30p_above_50$OC_change_rate)
+B = data.frame(x = d30p_below_50$aridity_index,y=d30p_below_50$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at 50%")
+
+A = data.frame(x = d20_above_med$aridity_index,y=d20_above_med$OC_change_rate)
+B = data.frame(x = d20_below_med$aridity_index,y=d20_below_med$OC_change_rate)
+ggplot(A,aes(x,y)) + geom_point() + geom_smooth(data=A, method=lm) + geom_point(data=B,colour='red') + geom_smooth(data=B, method=lm) + xlab("Aridity Index") + ylab("OC Change Rate") + ggtitle("Clay Content Separated at Median Clay Value")
+```
+<b>Black</b> dots = values <b>above</b> 50%/median value.
+<b>Red dots</b> = values <b>below</b> 50%/median value.

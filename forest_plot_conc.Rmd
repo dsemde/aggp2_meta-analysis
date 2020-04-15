@@ -1,0 +1,89 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+  library(tidyverse)
+  library(ggforestplot)
+}))
+```
+
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/forest_plot_dataset.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+```{r}
+# Factor whole dataset
+#dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Split dataset by Depth
+d <- dataset %>% group_split(depth_increment)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+```{r}
+# Forestplot
+forestplot(
+  df = d10,
+  estimate = per_OC_change,
+  name = group,
+  se = se,
+  colour = treatment,
+  title = "OC Change in 0 - 10 cm Depth Increment (%)",
+  xlab = "Organic Carbon Change (%)"
+)
+```
+
+```{r}
+# Forestplot
+forestplot(
+  df = d20,
+  estimate = per_OC_change,
+  name = group,
+  se = se,
+  colour = treatment,
+  title = "OC Change in 10 - 20 cm Depth Increment (%)",
+  xlab = "Organic Carbon Change (%)"
+)
+```
+
+
+```{r}
+# Forestplot
+forestplot(
+  df = d30,
+  estimate = per_OC_change,
+  name = group,
+  se = se,
+  colour = treatment,
+  title = "OC Change in 20 - 30 cm Depth Increment (%)",
+  xlab = "Organic Carbon Change (%)"
+)
+```
+
+
+```{r}
+# Forestplot
+forestplot(
+  df = d30p,
+  estimate = per_OC_change,
+  name = group,
+  se = se,
+  colour = treatment,
+  title = "OC Change in 30+ cm Depth Increment (%)",
+  xlab = "Organic Carbon Change (%)"
+)
+```

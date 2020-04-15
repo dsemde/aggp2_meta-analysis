@@ -1,0 +1,349 @@
+---
+title: "T1 v T2 Forest Plot"
+output: html_notebook
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+  library(tidyverse)
+  library(forestplot)
+  library(reshape)
+  library(Rmisc)
+  library(ggforestplot)
+}))
+```
+
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_forest_plot.csv")
+    dataset <- data.frame(datacsv)
+    
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_apr6.csv")
+    dat <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+#dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_category)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+```{r}
+#Reshape the data to long format
+#depth_10 <- melt.data.frame(d10, id = c("aridity_category","irrig_method", "soil_texture"), measure = "per_OC_st_change")
+```
+
+```{r}
+# Split by group and depth
+gr10 <- d10 %>% group_split(Group)
+aridity_10 <- as.data.frame(gr10[1])
+irr_10 <- as.data.frame(gr10[2])
+text_10 <- as.data.frame(gr10[3])
+
+ar10 <- aridity_10 %>% group_split(Treatment)
+arid_10 <- as.data.frame(ar10[1])
+dry_sub_10 <- as.data.frame(ar10[2])
+humid_10 <- as.data.frame(ar10[3])
+hyper_10 <- as.data.frame(ar10[4])
+semi_arid_10 <- as.data.frame(ar10[5])
+
+irr10 <- irr_10 %>% group_split(Treatment)
+drip_10 <- as.data.frame(irr10[1])
+flood_10 <- as.data.frame(irr10[2])
+sprinkler_10 <- as.data.frame(irr10[3])
+
+text10 <- text_10 %>% group_split(Treatment)
+coarse_10 <- as.data.frame(text10[1])
+fine_10 <- as.data.frame(text10[2])
+medium_10 <- as.data.frame(text10[3])
+```
+
+```{r}
+# Split by group and depth
+gr20 <- d20 %>% group_split(Group)
+aridity_20 <- as.data.frame(gr20[1])
+irr_20 <- as.data.frame(gr20[2])
+text_20 <- as.data.frame(gr20[3])
+
+ar20 <- aridity_20 %>% group_split(Treatment)
+arid_20 <- as.data.frame(ar20[1])
+dry_sub_20 <- as.data.frame(ar20[2])
+humid_20 <- as.data.frame(ar20[3])
+hyper_20 <- as.data.frame(ar20[4])
+semi_arid_20 <- as.data.frame(ar20[5])
+
+irr20 <- irr_20 %>% group_split(Treatment)
+drip_20 <- as.data.frame(irr20[1])
+flood_20 <- as.data.frame(irr20[2])
+sprinkler_20 <- as.data.frame(irr20[3])
+
+text20 <- text_20 %>% group_split(Treatment)
+coarse_20 <- as.data.frame(text20[1])
+fine_20 <- as.data.frame(text20[2])
+medium_20 <- as.data.frame(text20[3])
+```
+
+```{r}
+# Split by group and depth
+gr30 <- d30 %>% group_split(Group)
+aridity_30 <- as.data.frame(gr30[1])
+irr_30 <- as.data.frame(gr30[2])
+text_30 <- as.data.frame(gr30[3])
+
+ar30 <- aridity_30 %>% group_split(Treatment)
+arid_30 <- as.data.frame(ar30[1])
+dry_sub_30 <- as.data.frame(ar30[2])
+humid_30 <- as.data.frame(ar30[3])
+hyper_30 <- as.data.frame(ar30[4])
+semi_arid_30 <- as.data.frame(ar30[5])
+
+irr30 <- irr_30 %>% group_split(Treatment)
+drip_30 <- as.data.frame(irr30[1])
+flood_30 <- as.data.frame(irr30[2])
+sprinkler_30 <- as.data.frame(irr30[3])
+
+text30 <- text_30 %>% group_split(Treatment)
+coarse_30 <- as.data.frame(text30[1])
+fine_30 <- as.data.frame(text30[2])
+medium_30 <- as.data.frame(text30[3])
+```
+
+```{r}
+# Split by group and depth
+gr30p <- d30p %>% group_split(Group)
+aridity_30p <- as.data.frame(gr30p[1])
+irr_30p <- as.data.frame(gr30p[2])
+text_30p <- as.data.frame(gr30p[3])
+
+ar30p <- aridity_30p %>% group_split(Treatment)
+arid_30p <- as.data.frame(ar30p[1])
+dry_sub_30p <- as.data.frame(ar30p[2])
+humid_30p <- as.data.frame(ar30p[3])
+hyper_30p <- as.data.frame(ar30p[4])
+semi_arid_30p <- as.data.frame(ar30p[5])
+
+irr30p <- irr_30p %>% group_split(Treatment)
+drip_30p <- as.data.frame(irr30p[1])
+flood_30p <- as.data.frame(irr30p[2])
+sprinkler_30p <- as.data.frame(irr30p[3])
+
+text30p <- text_30p %>% group_split(Treatment)
+coarse_30p <- as.data.frame(text30p[1])
+fine_30p <- as.data.frame(text30p[2])
+medium_30p <- as.data.frame(text30p[3])
+```
+
+```{r}
+labels <- c("Depth", "Group", "Treatment", "Log Organic Carbon RR", "Upper", "Lower")
+
+# 0 - 10 CM Depth, Aridity Variables
+a <- CI(arid_10$log_organic_C_rr, ci=0.95)
+b <- CI(dry_sub_10$log_organic_C_rr, ci=0.95)
+c <- CI(humid_10$log_organic_C_rr, ci=0.95)
+d <- CI(hyper_10$log_organic_C_rr, ci=0.95)
+e <- CI(semi_arid_10$log_organic_C_rr, ci=0.95)
+
+arid10 <- c("0 - 10 cm", "Aridity", "Arid", a["mean"], a["upper"], a["lower"])
+dry10 <- c("0 - 10 cm", "Aridity", "Dry Sub-Humid", b["mean"], b["upper"], b["lower"])
+humid10 <- c("0 - 10 cm", "Aridity", "Humid", c["mean"], c["upper"], c["lower"])
+hyper10 <- c("0 - 10 cm", "Aridity", "Hyper-Arid", d["mean"], d["upper"], d["lower"])
+semi10 <- c("0 - 10 cm", "Aridity", "Semi-Arid", e["mean"], e["upper"], e["lower"])
+
+
+# 10 - 20 CM Depth, Aridity Variables
+a <- CI(arid_20$log_organic_C_rr, ci=0.95)
+b <- CI(dry_sub_20$log_organic_C_rr, ci=0.95)
+c <- CI(humid_20$log_organic_C_rr, ci=0.95)
+d <- CI(hyper_20$log_organic_C_rr, ci=0.95)
+e <- CI(semi_arid_20$log_organic_C_rr, ci=0.95)
+
+arid20 <- c("10 - 20 cm", "Aridity", "Arid", a["mean"], a["upper"], a["lower"])
+dry20 <- c("10 - 20 cm", "Aridity", "Dry Sub-Humid", b["mean"], b["upper"], b["lower"])
+humid20 <- c("10 - 20 cm", "Aridity", "Humid", c["mean"], c["upper"], c["lower"])
+hyper20 <- c("10 - 20 cm", "Aridity", "Hyper-Arid", d["mean"], d["upper"], d["lower"])
+semi20 <- c("10 - 20 cm", "Aridity", "Semi-Arid", e["mean"], e["upper"], e["lower"])
+
+# 20 - 30 CM Depth, Aridity Variables
+a <- CI(arid_30$log_organic_C_rr, ci=0.95)
+b <- CI(dry_sub_30$log_organic_C_rr, ci=0.95)
+c <- CI(humid_30$log_organic_C_rr, ci=0.95)
+d <- CI(hyper_30$log_organic_C_rr, ci=0.95)
+e <- CI(semi_arid_30$log_organic_C_rr, ci=0.95)
+
+arid30 <- c("20 - 30 cm", "Aridity", "Arid", a["mean"], a["upper"], a["lower"])
+dry30 <- c("20 - 30 cm", "Aridity", "Dry Sub-Humid", b["mean"], b["upper"], b["lower"])
+humid30 <- c("20 - 30 cm", "Aridity", "Humid", c["mean"], c["upper"], c["lower"])
+hyper30 <- c("20 - 30 cm", "Aridity", "Hyper-Arid", d["mean"], d["upper"], d["lower"])
+semi30 <- c("20 - 30 cm", "Aridity", "Semi-Arid", e["mean"], e["upper"], e["lower"])
+
+# 30+ CM Depth, Aridity Variables
+a <- CI(arid_30p$log_organic_C_rr, ci=0.95)
+b <- CI(dry_sub_30p$log_organic_C_rr, ci=0.95)
+c <- CI(humid_30p$log_organic_C_rr, ci=0.95)
+d <- CI(hyper_30p$log_organic_C_rr, ci=0.95)
+e <- CI(semi_arid_30p$log_organic_C_rr, ci=0.95)
+
+arid30p <- c("30+ cm", "Aridity", "Arid", a["mean"], a["upper"], a["lower"])
+dry30p <- c("30+ cm", "Aridity", "Dry Sub-Humid", b["mean"], b["upper"], b["lower"])
+humid30p <- c("30+ cm", "Aridity", "Humid", c["mean"], c["upper"], c["lower"])
+hyper30p <- c("30+ cm", "Aridity", "Hyper-Arid", d["mean"], d["upper"], d["lower"])
+semi30p <- c("30+ cm", "Aridity", "Semi-Arid", e["mean"], e["upper"], e["lower"])
+
+aridity <- rbind(arid10, dry10, humid10, hyper10, semi10, arid20, dry20, humid20, hyper20, semi20, arid30, dry30, humid30, hyper30, semi30, arid30p, dry30p, humid30p, hyper30p, semi30p)
+```
+
+```{r}
+# 0 - 10 CM Depth, Irrigation Variables
+a <- CI(drip_10$log_organic_C_rr, ci=0.95)
+b <- CI(flood_10$log_organic_C_rr, ci=0.95)
+c <- CI(sprinkler_10$log_organic_C_rr, ci=0.95)
+
+drip10 <- c("0 - 10 cm", "Irrigation", "Drip", a["mean"], a["upper"], a["lower"])
+flood10 <- c("0 - 10 cm", "Irrigation", "Flood", b["mean"], b["upper"], b["lower"])
+sprinkler10 <- c("0 - 10 cm", "Irrigation", "Sprinkler", c["mean"], c["upper"], c["lower"])
+
+
+# 10 - 20 CM Depth, Irrigation Variables
+a <- CI(drip_20$log_organic_C_rr, ci=0.95)
+b <- CI(flood_20$log_organic_C_rr, ci=0.95)
+c <- CI(sprinkler_20$log_organic_C_rr, ci=0.95)
+
+drip20 <- c("10 - 20 cm", "Irrigation", "Drip", a["mean"], a["upper"], a["lower"])
+flood20 <- c("10 - 20 cm", "Irrigation", "Flood", b["mean"], b["upper"], b["lower"])
+sprinkler20 <- c("10 - 20 cm", "Irrigation", "Sprinkler", c["mean"], c["upper"], c["lower"])
+
+
+# 20 - 30 CM Depth, Irrigation Variables
+a <- CI(drip_30$log_organic_C_rr, ci=0.95)
+b <- CI(flood_30$log_organic_C_rr, ci=0.95)
+c <- CI(sprinkler_30$log_organic_C_rr, ci=0.95)
+
+drip30 <- c("20 - 30 cm", "Irrigation", "Drip", a["mean"], a["upper"], a["lower"])
+flood30 <- c("20 - 30 cm", "Irrigation", "Flood", b["mean"], b["upper"], b["lower"])
+sprinkler30 <- c("20 - 30 cm", "Irrigation", "Sprinkler", c["mean"], c["upper"], c["lower"])
+
+
+# 30+ CM Depth, Irrigation Variables
+a <- CI(drip_30p$log_organic_C_rr, ci=0.95)
+b <- CI(flood_30p$log_organic_C_rr, ci=0.95)
+c <- CI(sprinkler_30p$log_organic_C_rr, ci=0.95)
+
+drip30p <- c("30+ cm", "Irrigation", "Drip", a["mean"], a["upper"], a["lower"])
+flood30p <- c("30+ cm", "Irrigation", "Flood", b["mean"], b["upper"], b["lower"])
+sprinkler30p <- c("30+ cm", "Irrigation", "Sprinkler", c["mean"], c["upper"], c["lower"])
+
+irrigation <- rbind(drip10, flood10, sprinkler10, drip20, flood20, sprinkler20, drip30, flood30, sprinkler30, drip30p, flood30p, sprinkler30p)
+```
+
+```{r}
+# 0 - 10 CM Depth, Soil Texture Variables
+a <- CI(coarse_10$log_organic_C_rr, ci=0.95)
+b <- CI(fine_10$log_organic_C_rr, ci=0.95)
+c <- CI(medium_10$log_organic_C_rr, ci=0.95)
+
+coarse10 <- c("0 - 10 cm", "Soil Texture", "coarse", a["mean"], a["upper"], a["lower"])
+fine10 <- c("0 - 10 cm", "Soil Texture", "fine", b["mean"], b["upper"], b["lower"])
+medium10 <- c("0 - 10 cm", "Soil Texture", "medium", c["mean"], c["upper"], c["lower"])
+
+
+# 10 - 20 CM Depth, Soil Texture Variables
+a <- CI(coarse_20$log_organic_C_rr, ci=0.95)
+b <- CI(fine_20$log_organic_C_rr, ci=0.95)
+c <- CI(medium_20$log_organic_C_rr, ci=0.95)
+
+coarse20 <- c("10 - 20 cm", "Soil Texture", "coarse", a["mean"], a["upper"], a["lower"])
+fine20 <- c("10 - 20 cm", "Soil Texture", "fine", b["mean"], b["upper"], b["lower"])
+medium20 <- c("10 - 20 cm", "Soil Texture", "medium", c["mean"], c["upper"], c["lower"])
+
+
+# 20 - 30 CM Depth, Soil Texture Variables
+a <- CI(coarse_30$log_organic_C_rr, ci=0.95)
+b <- CI(fine_30$log_organic_C_rr, ci=0.95)
+c <- CI(medium_30$log_organic_C_rr, ci=0.95)
+
+coarse30 <- c("20 - 30 cm", "Soil Texture", "coarse", a["mean"], a["upper"], a["lower"])
+fine30 <- c("20 - 30 cm", "Soil Texture", "fine", b["mean"], b["upper"], b["lower"])
+medium30 <- c("20 - 30 cm", "Soil Texture", "medium", c["mean"], c["upper"], c["lower"])
+
+
+# 30+ CM Depth, Soil Texture Variables
+a <- CI(coarse_30p$log_organic_C_rr, ci=0.95)
+b <- CI(fine_30p$log_organic_C_rr, ci=0.95)
+c <- CI(medium_30p$log_organic_C_rr, ci=0.95)
+
+coarse30p <- c("30+ cm", "Soil Texture", "coarse", a["mean"], a["upper"], a["lower"])
+fine30p <- c("30+ cm", "Soil Texture", "fine", b["mean"], b["upper"], b["lower"])
+medium30p <- c("30+ cm", "Soil Texture", "medium", c["mean"], c["upper"], c["lower"])
+
+texture <- rbind(coarse10, fine10, medium10, coarse20, fine20, medium20, coarse30, fine30, medium30, coarse30p, fine30p, medium30p)
+```
+
+```{r}
+dataset_full <- rbind(aridity, irrigation, texture)
+dataset_full <- as.data.frame(dataset_full)
+
+#dataset_full[sapply(dataset_full, is.character)] <- lapply(dataset_full[sapply(dataset_full, is.character)], as.factor)
+
+da <- dataset_full %>% group_split(V1)
+dataset_10 <- as.data.frame(da[1])
+dataset_20 <- as.data.frame(da[2])
+dataset_30 <- as.data.frame(da[3])
+dataset_30p <- as.data.frame(da[4])
+```
+
+
+```{r}
+p = ggplot(data=dataset_10,
+    aes(x = V3,y = mean, ymin = lower, ymax = upper ))+
+    geom_pointrange(aes(col=V3))+
+    geom_hline(aes(fill=V3),yintercept =0, linetype=2)+
+    xlab('Group')+ ylab("Log OC Respose Ratio (95% Confidence Interval)")+
+    geom_errorbar(aes(ymin=lower, ymax=upper,col=V3),width=0.5,cex=1)+ 
+    facet_wrap(~V2,strip.position="left",nrow=9,scales = "free_y") +
+    theme(plot.title=element_text(size=16,face="bold"),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.x=element_text(face="bold"),
+        axis.title=element_text(size=12,face="bold"),
+        strip.text.y = element_text(hjust=0,vjust = 1,angle=45,face="bold"))+
+    coord_flip()
+ p
+```
+
+
+```{r}
+df <-
+  ggforestplot::df_linear_associations %>%
+  filter(
+    trait == "per_OC_change",
+  )
+
+
+ggforestplot::forestplot(
+  df = d10,
+  name = Group,
+  estimate = per_OC_change,
+#  se = se
+)
+```

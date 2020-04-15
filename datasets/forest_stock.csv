@@ -1,0 +1,45 @@
+,group,treatment,depth_increment,per_OC_st_change,se
+1,Aridity,arid,0 - 10 cm,23.59327567,5.387470455
+2,Aridity,arid,10 - 20 cm,45.50204104,11.16617814
+3,Aridity,arid,20 - 30 cm,10.60281016,4.877971765
+4,Aridity,arid,30+ cm,33.52849643,7.958467809
+5,Aridity,semi-arid,0 - 10 cm,4.586017452,2.636362594
+6,Aridity,semi-arid,10 - 20 cm,0.898107919,2.200962103
+7,Aridity,semi-arid,20 - 30 cm,4.46220554,3.069165461
+8,Aridity,semi-arid,30+ cm,-0.960362078,3.719981556
+9,Aridity,dry sub-humid,0 - 10 cm,2.334774129,3.050523037
+10,Aridity,dry sub-humid,10 - 20 cm,,
+11,Aridity,dry sub-humid,20 - 30 cm,-3.420086687,4.315962013
+12,Aridity,dry sub-humid,30+ cm,-0.454141296,0.625193552
+13,Aridity,humid,0 - 10 cm,-16.68725647,0.672080028
+14,Aridity,humid,10 - 20 cm,-6.295399516,0.122474487
+15,Aridity,humid,20 - 30 cm,-30.2993722,0.467707173
+16,Aridity,humid,30+ cm,-32.88031303,0.418330013
+17,Aridity,hyper arid,0 - 10 cm,-7.221160616,0.725095477
+18,Aridity,hyper arid,10 - 20 cm,-25.25672481,1.141416113
+19,Aridity,hyper arid,20 - 30 cm,,
+20,Aridity,hyper arid,30+ cm,-5.663465853,1.063145486
+21,Irrigation,drippers,0 - 10 cm,2.247437159,3.895214065
+22,Irrigation,drippers,10 - 20 cm,-5.85301025,0.271968593
+23,Irrigation,drippers,20 - 30 cm,-18.68316139,2.983569228
+24,Irrigation,drippers,30+ cm,-14.52064162,4.315743469
+25,Irrigation,sprinkler,0 - 10 cm,3.68577776,3.128425689
+26,Irrigation,sprinkler,10 - 20 cm,11.30980443,8.307316456
+27,Irrigation,sprinkler,20 - 30 cm,4.290006055,3.750150396
+28,Irrigation,sprinkler,30+ cm,10.08409111,5.517601023
+29,Irrigation,floodfurr,0 - 10 cm,14.95891408,4.995984285
+30,Irrigation,floodfurr,10 - 20 cm,6.672356296,3.393333722
+31,Irrigation,floodfurr,20 - 30 cm,30.1182394,4.125709612
+32,Irrigation,floodfurr,30+ cm,7.771444703,7.837764353
+33,Texture,coarse,0 - 10 cm,5.117335267,4.449038496
+34,Texture,coarse,10 - 20 cm,22.56383913,11.89715817
+35,Texture,coarse,20 - 30 cm,8.958884199,11.49774185
+36,Texture,coarse,30+ cm,2.430184374,11.09484963
+37,Texture,medium,0 - 10 cm,13.70540539,2.959751547
+38,Texture,medium,10 - 20 cm,-1.980830815,5.098600578
+39,Texture,medium,20 - 30 cm,-8.883266854,1.344597215
+40,Texture,medium,30+ cm,4.215685994,6.49039842
+41,Texture,fine,0 - 10 cm,4.010988518,3.109175761
+42,Texture,fine,10 - 20 cm,0.574305025,2.762553318
+43,Texture,fine,20 - 30 cm,6.752214724,2.318076787
+44,Texture,fine,30+ cm,-0.39490185,4.521363799

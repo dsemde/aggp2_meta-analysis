@@ -1,0 +1,130 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+rm(list=ls())
+
+suppressWarnings(suppressMessages({
+  library(car)
+}))
+
+```
+
+
+```{r}
+sum_data <- read.csv("datasets/forest_plot_stock_apr14.csv")
+```
+
+```{r}
+d <- sum_data %>% group_split(depth_increment)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+
+
+```{r}
+tiff("6 Meta by group.tiff", width = 12, height = 8, units = 'in', res = 300)
+
+par( mar=c(2, 0.2, 0.2, 0.2)
+     , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
+     , omi = c(0.5, 1.75, 0.1, 0.1)  # by inches, outer margin 
+     , mgp = c(0, 0.3, 0) # set distance of axis
+     , tcl = 0.4
+     # , cex.axis = 1.0
+     , mfrow=c(1,2))
+```
+
+```{r}
+# meta_II with predicted SD
+x_min <- min(d10$Low_Perc, na.rm = T)
+x_max <- max(d10$High_Perc, na.rm = T)
+
+sum_data$col <- as.character(d10$col)
+
+plot(d10$ID ~ d10$Mean_Perc, lwd=2
+     # ,xlim=c(0,21),ylim=c(1,16)
+     , las=1
+     , xaxt='n', yaxt='n'
+     , xlim = c(x_min, x_max)
+     # , ylim = c(0.5, 4.5)
+     , xlab = '', ylab='', main=''
+     , col = d10$col
+     , pch = d10$pch
+     # , cex = 0.75
+     , cex = ifelse (d10$TopGroup == "All data"|d10$TopGroup == "SurfaceSubsurface", 1.5, 1.5) 
+     # , xaxs="i"
+)
+
+arrows(d10$Low_Perc, d10$ID, d10$High_Perc, d10$ID
+       ,code=3,length=0.05,angle=90,d10$col,lwd=2)
+
+abline(v=0, col="red", lty=2, lwd=2)
+
+
+axis (side = 1, at = seq(-15, 65, 10), labels = seq(-15, 65, 10)
+      , cex=1
+      , las = 1)
+
+axis (side = 2, at = d10$ID, labels = paste(d10$SubGroup, sep = "")
+      , cex=1
+      , las = 2)
+
+text(ifelse(d10$High_Perc > 50, d10$Low_Perc-10, d10$High_Perc+2.5), d10$ID
+     , paste(d10$obs,"/",d10$n_study, sep = ""), cex=0.85, adj=0)
+
+abline(h=c(48,44), col="black", lty=3, lwd=2)
+
+text(-9.5, 27, "(a)", cex=1.25, adj=0)
+
+
+
+x_min <- min(d20$Low_Perc, na.rm = T)
+x_max <- max(d20$High_Perc, na.rm = T)
+
+d20$col <- as.character(d20$col)
+
+plot(d20$ID ~ d20$Mean_Perc, lwd=2
+     # ,xlim=c(0,21),ylim=c(1,16)
+     , las=1
+     , xaxt='n', yaxt='n'
+     , xlim = c(x_min, x_max)
+     # , ylim = c(0.5, 4.5)
+     , xlab = '', ylab='', main=''
+     , col = d20$col
+     , pch = d20$pch
+     # , cex = 0.75
+     , cex = ifelse (d20$TopGroup == "All data"|d20$TopGroup == "SurfaceSubsurface", 1.5, 1.5) 
+     # , xaxs="i"
+)
+
+
+arrows(d20$Low_Perc, d20$ID, d20$High_Perc, d20$ID
+       ,code=3,length=0.05,angle=90,d20$col,lwd=2)
+
+abline(v=0, col="red", lty=2, lwd=2)
+
+
+axis (side = 1, at = seq(-15, 65, 10), labels = seq(-15, 65, 10)
+      , cex=1
+      , las = 1)
+
+
+
+# sort(sum_data$High2_Perc)
+text(ifelse(d20$High_Perc > 62, d20$Low_Perc-10, d20$High_Perc+2.5), d20$ID
+     , paste(d20$obs,"/",d20$n_study, sep = ""), cex=0.85, adj=0)
+
+# ?axis ()
+
+abline(h=c(4,13,20,24), col="black", lty=3, lwd=2)
+
+mtext(side = 1, text = paste("Soil carbon stocks (% changes)", sep=" "), line = 1, cex=1.05, outer = T, adj = 0.5)
+
+text(-14.5, 27, "(b)", cex=1.25, adj=0)
+```
+
