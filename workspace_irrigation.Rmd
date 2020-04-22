@@ -1,0 +1,204 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_apr20.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_cat_2)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+***************************************************************
+OC Stock - DRIPPERS
+***************************************************************
+
+0 - 10 CM
+```{r}
+tempirrig1 <- split(d10, d10$irrig_methodcat=="drippers")
+d10f <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(d20, d20$irrig_methodcat=="drippers")
+d20f <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(d30, d30$irrig_methodcat=="drippers")
+d30f <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(d30p, d30p$irrig_methodcat=="drippers")
+d30pf <- tempirrig4$'TRUE'
+```
+
+
+```{r}
+w.mean(d10f$per_OC_st_change,d10f$organic_C_n_t1)
+w.sd(d10f$per_OC_st_change,d10f$organic_C_n_t1)/sqrt(sum(d10f$organic_C_n_t1))
+sum(d10f$organic_C_n_t1)
+length(d10f$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20f$per_OC_st_change,d20f$organic_C_n_t1)
+w.sd(d20f$per_OC_st_change,d20f$organic_C_n_t1)/sqrt(sum(d20f$organic_C_n_t1))
+sum(d20f$organic_C_n_t1)
+length(d20f$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30f$per_OC_st_change,d30f$organic_C_n_t1)
+w.sd(d30f$per_OC_st_change,d30f$organic_C_n_t1)/sqrt(sum(d30f$organic_C_n_t1))
+sum(d30f$organic_C_n_t1)
+length(d30f$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pf$per_OC_st_change,d30pf$organic_C_n_t1)
+w.sd(d30pf$per_OC_st_change,d30pf$organic_C_n_t1)/sqrt(sum(d30pf$organic_C_n_t1))
+sum(d30pf$organic_C_n_t1)
+length(d30pf$organic_C_n_t1)
+```
+
+***************************************************************
+OC Stock - SPRINKLERS
+***************************************************************
+
+
+```{r}
+tempirrig1 <- split(d10, d10$irrig_methodcat=="sprinkler")
+d10m <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(d20, d20$irrig_methodcat=="sprinkler")
+d20m <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(d30, d30$irrig_methodcat=="sprinkler")
+d30m <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(d30p, d30p$irrig_methodcat=="sprinkler")
+d30pm <- tempirrig4$'TRUE'
+```
+
+0 - 10 CM
+```{r}
+w.mean(d10m$per_OC_st_change,d10m$organic_C_n_t1)
+w.sd(d10m$per_OC_st_change,d10m$organic_C_n_t1)/sqrt(sum(d10m$organic_C_n_t1))
+sum(d10m$organic_C_n_t1)
+length(d10m$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20m$per_OC_st_change,d20m$organic_C_n_t1)
+w.sd(d20m$per_OC_st_change,d20m$organic_C_n_t1)/sqrt(sum(d20m$organic_C_n_t1))
+sum(d20m$organic_C_n_t1)
+length(d20m$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30m$per_OC_st_change,d30m$organic_C_n_t1)
+w.sd(d30m$per_OC_st_change,d30m$organic_C_n_t1)/sqrt(sum(d30m$organic_C_n_t1))
+sum(d30m$organic_C_n_t1)
+length(d30m$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pm$per_OC_st_change,d30pm$organic_C_n_t1)
+w.sd(d30pm$per_OC_st_change,d30pm$organic_C_n_t1)/sqrt(sum(d30pm$organic_C_n_t1))
+sum(d30pm$organic_C_n_t1)
+length(d30pm$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - FLOOD/FURROW
+***************************************************************
+
+
+```{r}
+tempirrig1 <- split(d10, d10$irrig_methodcat=="floodfurr")
+d10c <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(d20, d20$irrig_methodcat=="floodfurr")
+d20c <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(d30, d30$irrig_methodcat=="floodfurr")
+d30c <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(d30p, d30p$irrig_methodcat=="floodfurr")
+d30pc <- tempirrig4$'TRUE'
+```
+
+0 - 10 CM
+```{r}
+w.mean(d10c$per_OC_st_change,d10c$organic_C_n_t1)
+w.sd(d10c$per_OC_st_change,d10c$organic_C_n_t1)/sqrt(sum(d10c$organic_C_n_t1))
+sum(d10c$organic_C_n_t1)
+length(d10c$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20c$per_OC_st_change,d20c$organic_C_n_t1)
+w.sd(d20c$per_OC_st_change,d20c$organic_C_n_t1)/sqrt(sum(d20c$organic_C_n_t1))
+sum(d20c$organic_C_n_t1)
+length(d20c$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30c$per_OC_st_change,d30c$organic_C_n_t1)
+w.sd(d30c$per_OC_st_change,d30c$organic_C_n_t1)/sqrt(sum(d30c$organic_C_n_t1))
+sum(d30c$organic_C_n_t1)
+length(d30c$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pc$per_OC_st_change,d30pc$organic_C_n_t1)
+w.sd(d30pc$per_OC_st_change,d30pc$organic_C_n_t1)/sqrt(sum(d30pc$organic_C_n_t1))
+sum(d30pc$organic_C_n_t1)
+length(d30pc$organic_C_n_t1)
+```
+

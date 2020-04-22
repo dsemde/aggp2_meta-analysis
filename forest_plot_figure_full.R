@@ -4,7 +4,7 @@ library(car)
 library(tidyverse)
 
 
-sum_data <- read.csv("datasets/forest_plot_stock_apr14.csv")
+sum_data <- read.csv("datasets/forest_plot_stock_apr20.csv")
 
 d <- sum_data %>% group_split(depth_increment)
 d10 <- as.data.frame(d[1])
@@ -13,7 +13,7 @@ d30 <- as.data.frame(d[3])
 d30p <- as.data.frame(d[4])
 
 # Set TIFF output parameters
-tiff("OC Meta.tiff", width = 12, height = 4, units = 'in', res = 300)
+tiff("OC Stock Meta April 21.tiff", width = 12, height = 4, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
@@ -64,7 +64,7 @@ text(ifelse(d10$High_Perc > 50, d10$Low_Perc-10, d10$High_Perc+7), d10$ID
      , paste(d10$obs,"/",d10$n_study, sep = ""), cex=0.85, adj=0)
 
 # Separation lines
-abline(h=c(55,51,47), col="black", lty=3, lwd=2)
+abline(h=c(52,48,44), col="black", lty=3, lwd=2)
 
 mtext("0 - 10 cm", side=3, cex=0.75)
 
@@ -111,7 +111,7 @@ text(ifelse(d20$High_Perc > 65, d20$Low_Perc-10, d20$High_Perc+7), d20$ID
 # ?axis ()
 
 # Separation lines
-abline(h=c(40,36,32), col="black", lty=3, lwd=2)
+abline(h=c(38,34,30), col="black", lty=3, lwd=2)
 
 mtext("10 - 20 cm", side=3, cex=0.75)
 
@@ -127,7 +127,6 @@ x_max <- max(d30$High_Perc, na.rm = T)
 d30$col <- as.character(d30$col)
 
 plot(d30$ID ~ d30$Mean_Perc, lwd=2
-     # ,xlim=c(0,21),ylim=c(1,16)
      , las=1
      , xaxt='n', yaxt='n'
      , xlim = c(-35, 70)
@@ -159,9 +158,7 @@ text(ifelse(d30$High_Perc > 62, d30$Low_Perc-10, d30$High_Perc+7), d30$ID
 
 # ?axis ()
 
-abline(h=c(25,21,17), col="black", lty=3, lwd=2)
-
-#mtext(side = 1, text = paste("Soil carbon stocks (% changes)", sep=" "), line = 1, cex=1.05, outer = T, adj = 0.5)
+abline(h=c(24,20,16), col="black", lty=3, lwd=2)
 
 mtext("20 - 30 cm", side=3, cex=0.75)
 
@@ -209,8 +206,6 @@ text(ifelse(d30p$High_Perc > 62, d30p$Low_Perc-10, d30p$High_Perc+7), d30p$ID
 
 # Separation lines
 abline(h=c(10,6,2), col="black", lty=3, lwd=2)
-
-#mtext(side = 1, text = paste("Soil carbon stocks (% changes)", sep=" "), line = 1, cex=1.05, outer = T, adj = 0.5)
 
 mtext("30+ cm", side=3, cex=0.75)
 

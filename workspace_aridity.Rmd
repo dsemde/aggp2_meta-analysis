@@ -1,0 +1,255 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_apr20.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_cat_2)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+***************************************************************
+OC Stock - ARID
+***************************************************************
+
+0 - 10 CM
+```{r}
+temparid1 <- split(d10, d10$aridity_category=="Arid")
+d10a <- temparid1$'TRUE'
+
+temparid2 <- split(d20, d20$aridity_category=="Arid")
+d20a <- temparid2$'TRUE'
+
+temparid3 <- split(d30, d30$aridity_category=="Arid")
+d30a <- temparid3$'TRUE'
+
+temparid4 <- split(d30p, d30p$aridity_category=="Arid")
+d30pa <- temparid4$'TRUE'
+```
+
+
+```{r}
+w.mean(d10a$per_OC_st_change,d10a$organic_C_n_t1)
+w.sd(d10a$per_OC_st_change,d10a$organic_C_n_t1)/sqrt(sum(d10a$organic_C_n_t1))
+sum(d10a$organic_C_n_t1)
+length(d10a$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20a$per_OC_st_change,d20a$organic_C_n_t1)
+w.sd(d20a$per_OC_st_change,d20a$organic_C_n_t1)/sqrt(sum(d20a$organic_C_n_t1))
+sum(d20a$organic_C_n_t1)
+length(d20a$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30a$per_OC_st_change,d30a$organic_C_n_t1)
+w.sd(d30a$per_OC_st_change,d30a$organic_C_n_t1)/sqrt(sum(d30a$organic_C_n_t1))
+sum(d30a$organic_C_n_t1)
+length(d30a$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pa$per_OC_st_change,d30pa$organic_C_n_t1)
+w.sd(d30pa$per_OC_st_change,d30pa$organic_C_n_t1)/sqrt(sum(d30pa$organic_C_n_t1))
+sum(d30pa$organic_C_n_t1)
+length(d30pa$organic_C_n_t1)
+```
+
+***************************************************************
+OC Stock - SEMI-ARID
+***************************************************************
+
+
+```{r}
+temparid1 <- split(d10, d10$aridity_category=="Semi-Arid")
+d10m <- temparid1$'TRUE'
+
+temparid2 <- split(d20, d20$aridity_category=="Semi-Arid")
+d20m <- temparid2$'TRUE'
+
+temparid3 <- split(d30, d30$aridity_category=="Semi-Arid")
+d30m <- temparid3$'TRUE'
+
+temparid4 <- split(d30p, d30p$aridity_category=="Semi-Arid")
+d30pm <- temparid4$'TRUE'
+```
+
+0 - 10 CM
+```{r}
+w.mean(d10m$per_OC_st_change,d10m$organic_C_n_t1)
+w.sd(d10m$per_OC_st_change,d10m$organic_C_n_t1)/sqrt(sum(d10m$organic_C_n_t1))
+sum(d10m$organic_C_n_t1)
+length(d10m$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20m$per_OC_st_change,d20m$organic_C_n_t1)
+w.sd(d20m$per_OC_st_change,d20m$organic_C_n_t1)/sqrt(sum(d20m$organic_C_n_t1))
+sum(d20m$organic_C_n_t1)
+length(d20m$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30m$per_OC_st_change,d30m$organic_C_n_t1)
+w.sd(d30m$per_OC_st_change,d30m$organic_C_n_t1)/sqrt(sum(d30m$organic_C_n_t1))
+sum(d30m$organic_C_n_t1)
+length(d30m$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pm$per_OC_st_change,d30pm$organic_C_n_t1)
+w.sd(d30pm$per_OC_st_change,d30pm$organic_C_n_t1)/sqrt(sum(d30pm$organic_C_n_t1))
+sum(d30pm$organic_C_n_t1)
+length(d30pm$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - DRY SUB-HUMID
+***************************************************************
+
+
+```{r}
+temparid1 <- split(d10, d10$aridity_category=="Dry sub-humid")
+d10c <- temparid1$'TRUE'
+
+temparid2 <- split(d20, d20$aridity_category=="Dry sub-humid")
+d20c <- temparid2$'TRUE'
+
+temparid3 <- split(d30, d30$aridity_category=="Dry sub-humid")
+d30c <- temparid3$'TRUE'
+
+temparid4 <- split(d30p, d30p$aridity_category=="Dry sub-humid")
+d30pc <- temparid4$'TRUE'
+```
+
+0 - 10 CM
+```{r}
+w.mean(d10c$per_OC_st_change,d10c$organic_C_n_t1)
+w.sd(d10c$per_OC_st_change,d10c$organic_C_n_t1)/sqrt(sum(d10c$organic_C_n_t1))
+sum(d10c$organic_C_n_t1)
+length(d10c$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20c$per_OC_st_change,d20c$organic_C_n_t1)
+w.sd(d20c$per_OC_st_change,d20c$organic_C_n_t1)/sqrt(sum(d20c$organic_C_n_t1))
+sum(d20c$organic_C_n_t1)
+length(d20c$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30c$per_OC_st_change,d30c$organic_C_n_t1)
+w.sd(d30c$per_OC_st_change,d30c$organic_C_n_t1)/sqrt(sum(d30c$organic_C_n_t1))
+sum(d30c$organic_C_n_t1)
+length(d30c$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30pc$per_OC_st_change,d30pc$organic_C_n_t1)
+w.sd(d30pc$per_OC_st_change,d30pc$organic_C_n_t1)/sqrt(sum(d30pc$organic_C_n_t1))
+sum(d30pc$organic_C_n_t1)
+length(d30pc$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - HUMID
+***************************************************************
+
+
+```{r}
+temparid1 <- split(d10, d10$aridity_category=="Humid")
+d10h <- temparid1$'TRUE'
+
+temparid2 <- split(d20, d20$aridity_category=="Humid")
+d20h <- temparid2$'TRUE'
+
+temparid3 <- split(d30, d30$aridity_category=="Humid")
+d30h <- temparid3$'TRUE'
+
+temparid4 <- split(d30p, d30p$aridity_category=="Humid")
+d30ph <- temparid4$'TRUE'
+```
+
+0 - 10 CM
+```{r}
+w.mean(d10h$per_OC_st_change,d10h$organic_C_n_t1)
+w.sd(d10h$per_OC_st_change,d10h$organic_C_n_t1)/sqrt(sum(d10h$organic_C_n_t1))
+sum(d10h$organic_C_n_t1)
+length(d10h$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20h$per_OC_st_change,d20h$organic_C_n_t1)
+w.sd(d20h$per_OC_st_change,d20h$organic_C_n_t1)/sqrt(sum(d20h$organic_C_n_t1))
+sum(d20h$organic_C_n_t1)
+length(d20h$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30h$per_OC_st_change,d30h$organic_C_n_t1)
+w.sd(d30h$per_OC_st_change,d30h$organic_C_n_t1)/sqrt(sum(d30h$organic_C_n_t1))
+sum(d30h$organic_C_n_t1)
+length(d30h$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30ph$per_OC_st_change,d30ph$organic_C_n_t1)
+w.sd(d30ph$per_OC_st_change,d30ph$organic_C_n_t1)/sqrt(sum(d30ph$organic_C_n_t1))
+sum(d30ph$organic_C_n_t1)
+length(d30ph$organic_C_n_t1)
+```

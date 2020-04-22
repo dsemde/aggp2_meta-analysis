@@ -1,0 +1,120 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_apr20.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(depth_cat_2)
+d10 <- as.data.frame(d[1])
+d20 <- as.data.frame(d[2])
+d30 <- as.data.frame(d[3])
+d30p <- as.data.frame(d[4])
+```
+
+OC CONCENTRATION
+0 - 10 CM
+```{r}
+w.mean(d10$per_OC_change,d10$organic_C_n_t1)
+w.sd(d10$per_OC_change,d10$organic_C_n_t1)
+sum(d10$organic_C_n_t1)
+length(d10$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20$per_OC_change,d20$organic_C_n_t1)
+w.sd(d20$per_OC_change,d20$organic_C_n_t1)
+sum(d20$organic_C_n_t1)
+length(d20$organic_C_n_t1)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30$per_OC_change,d30$organic_C_n_t1)
+w.sd(d30$per_OC_change,d30$organic_C_n_t1)
+sum(d30$organic_C_n_t1)
+length(d30$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30p$per_OC_change,d30p$organic_C_n_t1)
+w.sd(d30p$per_OC_change,d30p$organic_C_n_t1)
+sum(d30p$organic_C_n_t1)
+length(d30p$organic_C_n_t1)
+```
+
+OC STOCK
+0 - 10 CM
+```{r}
+w.mean(d10$per_OC_st_change,d10$organic_C_n_t1)
+w.sd(d10$per_OC_st_change,d10$organic_C_n_t1)
+sum(d10$organic_C_n_t1)
+length(d10$organic_C_n_t1)
+```
+
+10 - 20 CM
+```{r}
+w.mean(d20$per_OC_st_change,d20$organic_C_n_t1)
+w.sd(d20$per_OC_st_change,d20$organic_C_n_t1)
+sum(d20$organic_C_n_t1)
+length(d20$per_OC_st_change)
+```
+
+20 - 30 CM
+```{r}
+w.mean(d30$per_OC_st_change,d30$organic_C_n_t1)
+w.sd(d30$per_OC_st_change,d30$organic_C_n_t1)
+sum(d30$organic_C_n_t1)
+length(d30$organic_C_n_t1)
+```
+
+30+ CM
+```{r}
+w.mean(d30p$per_OC_st_change,d30p$organic_C_n_t1)
+w.sd(d30p$per_OC_st_change,d30p$organic_C_n_t1)
+sum(d30p$organic_C_n_t1)
+length(d30p$organic_C_n_t1)
+```
+
+
+
+
+

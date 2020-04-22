@@ -4,6 +4,10 @@ output: html_notebook
 ---
 
 ```{r}
+library(tidyverse)
+```
+
+```{r}
 # Load dataset
 suppressWarnings(suppressMessages({
     datacsv <- read_csv("datasets/irrt1vt2_estBD_apr6.csv")
