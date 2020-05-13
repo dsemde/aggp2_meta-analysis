@@ -13,7 +13,7 @@ d30 <- as.data.frame(d[3])
 d30p <- as.data.frame(d[4])
 
 # Set TIFF output parameters
-tiff("OC Stock Meta April 21.tiff", width = 12, height = 4, units = 'in', res = 300)
+tiff("OC Stock Meta April 23.tiff", width = 12, height = 4, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
@@ -153,7 +153,7 @@ axis (side = 1, at = seq(-20, 65, 10), labels = seq(-20, 65, 10)
 
 
 # sort(sum_data$High2_Perc)
-text(ifelse(d30$High_Perc > 62, d30$Low_Perc-10, d30$High_Perc+7), d30$ID
+text(ifelse(d30$High_Perc > 62, d30$Low_Perc-10, d30$High_Perc+14), d30$ID
      , paste(d30$obs,"/",d30$n_study, sep = ""), cex=0.85, adj=0)
 
 # ?axis ()

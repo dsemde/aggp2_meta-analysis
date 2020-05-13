@@ -1,0 +1,91 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_may11.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(study_duration_cat)
+short <- as.data.frame(d[3])
+medium <- as.data.frame(d[2])
+long <- as.data.frame(d[1])
+```
+
+OC STOCK
+Short Term
+```{r}
+w.mean(short$per_OC_st_change,short$organic_C_n_t1)
+w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1))
+sum(short$organic_C_n_t1)
+length(short$organic_C_n_t1)
+```
+
+Medium Term
+```{r}
+w.mean(medium$per_OC_st_change,medium$organic_C_n_t1)
+w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1))
+sum(medium$organic_C_n_t1)
+length(medium$per_OC_st_change)
+```
+
+Long Term
+```{r}
+w.mean(long$per_OC_st_change,long$organic_C_n_t1)
+w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1))
+sum(long$organic_C_n_t1)
+length(long$organic_C_n_t1)
+```
+
+All Study Terms
+```{r}
+w.mean(dataset$per_OC_st_change,dataset$organic_C_n_t1)
+w.sd(dataset$per_OC_st_change,dataset$organic_C_n_t1)/sqrt(sum(dataset$organic_C_n_t1))
+sum(dataset$organic_C_n_t1)
+length(dataset$organic_C_n_t1)
+```
+
+
+
+
+

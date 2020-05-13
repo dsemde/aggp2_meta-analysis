@@ -1,0 +1,72 @@
+---
+title: "N+ vs. N- Treatments"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_apr20.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="yes")
+dataset <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+#tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+#datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+#dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+#d <- dataset %>% group_split(depth_cat_2)
+#d10 <- as.data.frame(d[1])
+#d20 <- as.data.frame(d[2])
+#d30 <- as.data.frame(d[3])
+#d30p <- as.data.frame(d[4])
+```
+
+```{r}
+# function for number of observations 
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x))) 
+  # experiment with the multiplier to find the perfect position
+}
+
+# function for mean labels
+mean.n <- function(x){
+  return(c(y = median(x)*0.97, label = round(mean(x),2))) 
+  # experiment with the multiplier to find the perfect position
+}
+```
+
+```{r}
+# Boxplot to visualize the average percent change for each Irrigation Method (Category) and depth
+p <- ggboxplot(dataset, x="depth_cat_2", y="per_OC_st_change", 
+          color = "N_pair_state", palette = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6"),
+          ylab = "Organic Carbon Change from T1 to T2 (%)", xlab = "Depth Category")
+p + stat_summary(fun.data = give.n, geom = "text", fun = median, position = position_nudge(y = 0.5)) + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+

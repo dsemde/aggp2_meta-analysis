@@ -1,0 +1,16 @@
+ID,TopGroup,SubGroup,study_duration,Mean_Perc,se,Low_Perc,High_Perc,col,obs,n_study
+17,short,0 - 10 cm,short,7.370513,2.192544,5.177969,9.563057,orange,88,24
+16,short,10 - 20 cm,short,6.507262,2.724219,3.783043,9.231481,orange,25,7
+15,short,20 - 30 cm,short,3.721438,3.506109,0.215329,7.227547,orange,41,11
+14,short,30+ cm,short,-2.060686,3.90223,-5.962916,1.841544,orange,25,8
+13,,Duration Mean,short,5.096919,1.518793,3.578126,6.615712,black,179,50
+11,medium,0 - 10 cm,medium,16.0725,4.751583,11.320917,20.824083,cadetblue,54,18
+10,medium,10 - 20 cm,medium,6.533022,7.107252,-0.57423,13.640274,cadetblue,19,6
+9,medium,20 - 30 cm,medium,6.848295,5.579648,1.268647,12.427943,cadetblue,26,9
+8,medium,30+ cm,medium,12.5683,5.917054,6.651246,18.485354,cadetblue,26,8
+7,,Duration Mean,medium,11.97499,2.894922,9.080068,14.869912,black,125,41
+5,long,0 - 10 cm,long,-6.226971,4.514292,-10.741263,-1.712679,#bf63bf,37,4
+4,long,10 - 20 cm,long,20.12195,0,20.12195,20.12195,#bf63bf,4,1
+3,long,20 - 30 cm,long,0,0,0,0,#bf63bf,17,1
+2,long,30+ cm,long,,,,,#bf63bf,,
+1,,Duration Mean,long,-2.584657,3.014304,-5.598961,0.429647,black,58,6

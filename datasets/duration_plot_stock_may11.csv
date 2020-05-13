@@ -1,0 +1,34 @@
+ID,TopGroup,SubGroup,study_duration,Mean_Perc,se,Low_Perc,High_Perc,col,obs,n_study
+42,Aridity,Arid,short,6.007067,4.70282,1.304247,10.709887,orange,19,6
+41,Aridity,Semi-Arid,short,9.821045,1.654743,8.166302,11.475788,orange,122,34
+40,Aridity,Dry Sub-Humid,short,1.654847,4.790732,-3.135885,6.445579,orange,17,5
+39,Aridity,Humid,short,-20.38503,2.109394,-22.494424,-18.275636,orange,21,5
+33,Irrigation,Drippers,short,-7.632724,2.276352,-9.909076,-5.356372,cadetblue,60,17
+32,Irrigation,Sprinkler,short,5.29082,1.725488,3.565332,7.016308,cadetblue,67,18
+31,Irrigation,Flood/Furrow,short,16.54031,3.292312,13.247998,19.832622,cadetblue,32,9
+37,Texture,Coarse,short,-5.227455,2.888317,-8.115772,-2.339138,#bf63bf,49,14
+36,Texture,Medium,short,7.005879,2.593303,4.412576,9.599182,#bf63bf,45,12
+35,Texture,Fine,short,11.14789,1.821632,9.326258,12.969522,#bf63bf,63,18
+29,,Increment Mean,short,5.096919,1.518793,3.578126,6.615712,black,178,50
+28,Aridity,Arid,medium,64.55825,3.418549,61.139701,67.976799,orange,24,8
+27,Aridity,Semi-Arid,medium,-0.7200399,2.761179,-3.4812189,2.0411391,orange,73,27
+26,Aridity,Dry Sub-Humid,medium,0.001373099,1.358525,-1.357151901,1.359898099,orange,28,6
+25,Aridity,Humid,medium,,,,,orange,,
+19,Irrigation,Drippers,medium,,,,,cadetblue,,
+18,Irrigation,Sprinkler,medium,12.56475,3.524435,9.040315,16.089185,cadetblue,78,24
+17,Irrigation,Flood/Furrow,medium,11.21965,5.107223,6.112427,16.326873,cadetblue,46,16
+23,Texture,Coarse,medium,30.96547,7.35335,23.61212,38.31882,#bf63bf,27,10
+22,Texture,Medium,medium,-1.695625,1.837506,-3.533131,0.141881,#bf63bf,19,4
+21,Texture,Fine,medium,5.816584,3.551412,2.265172,9.367996,#bf63bf,69,22
+15,,Increment Mean,medium,11.97499,2.894922,9.080068,14.869912,black,125,41
+14,Aridity,Arid,long,5.43272,2.44783,2.98489,7.88055,orange,42,4
+13,Aridity,Semi-Arid,long,-23.63027,6.315089,-29.945359,-17.315181,orange,16,2
+12,Aridity,Dry Sub-Humid,long,,,,,orange,,
+11,Aridity,Humid,long,,,,,orange,,
+5,Irrigation,Drippers,long,,,,,cadetblue,,
+4,Irrigation,Sprinkler,long,-38.21435,0,-38.21435,-38.21435,cadetblue,12,1
+3,Irrigation,Flood/Furrow,long,6.710044,2.316794,4.39325,9.026838,cadetblue,46,5
+9,Texture,Coarse,long,,,,,#bf63bf,,
+8,Texture,Medium,long,,,,,#bf63bf,,
+7,Texture,Fine,long,-7.561687,2.552227,-10.113914,-5.00946,#bf63bf,50,4
+1,,Increment Mean,long,-2.584657,3.014304,-5.598961,0.429647,black,58,6

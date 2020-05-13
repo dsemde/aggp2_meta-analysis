@@ -1,0 +1,172 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_may11.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(study_duration_cat)
+short <- as.data.frame(d[3])
+medium <- as.data.frame(d[2])
+long <- as.data.frame(d[1])
+```
+
+
+
+***************************************************************
+OC Stock - DRIPPERS
+***************************************************************
+
+
+```{r}
+tempirrig1 <- split(short, short$irrig_methodcat=="drippers")
+shortd <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(medium, medium$irrig_methodcat=="drippers")
+mediumd <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(long, long$irrig_methodcat=="drippers")
+longd <- tempirrig3$'TRUE'
+```
+
+SHORT
+```{r}
+w.mean(shortd$per_OC_st_change,shortd$organic_C_n_t1)
+w.sd(shortd$per_OC_st_change,shortd$organic_C_n_t1)/sqrt(sum(shortd$organic_C_n_t1))
+sum(shortd$organic_C_n_t1)
+length(shortd$organic_C_n_t1)
+```
+
+MEDIUM
+```{r}
+w.mean(mediumd$per_OC_st_change,mediumd$organic_C_n_t1)
+w.sd(mediumd$per_OC_st_change,mediumd$organic_C_n_t1)/sqrt(sum(mediumd$organic_C_n_t1))
+sum(mediumd$organic_C_n_t1)
+length(mediumd$organic_C_n_t1)
+```
+
+LONG
+```{r}
+w.mean(longd$per_OC_st_change,longd$organic_C_n_t1)
+w.sd(longd$per_OC_st_change,longd$organic_C_n_t1)/sqrt(sum(longd$organic_C_n_t1))
+sum(longd$organic_C_n_t1)
+length(longd$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - SPRINKLERS
+***************************************************************
+
+
+```{r}
+tempirrig1 <- split(short, short$irrig_methodcat=="sprinkler")
+shorts <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(medium, medium$irrig_methodcat=="sprinkler")
+mediums <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(long, long$irrig_methodcat=="sprinkler")
+longs <- tempirrig3$'TRUE'
+```
+
+SHORT
+```{r}
+w.mean(shorts$per_OC_st_change,shorts$organic_C_n_t1)
+w.sd(shorts$per_OC_st_change,shorts$organic_C_n_t1)/sqrt(sum(shorts$organic_C_n_t1))
+sum(shorts$organic_C_n_t1)
+length(shorts$organic_C_n_t1)
+```
+
+MEDIUM
+```{r}
+w.mean(mediums$per_OC_st_change,mediums$organic_C_n_t1)
+w.sd(mediums$per_OC_st_change,mediums$organic_C_n_t1)/sqrt(sum(mediums$organic_C_n_t1))
+sum(mediums$organic_C_n_t1)
+length(mediums$organic_C_n_t1)
+```
+
+LONG
+```{r}
+w.mean(longs$per_OC_st_change,longs$organic_C_n_t1)
+w.sd(longs$per_OC_st_change,longs$organic_C_n_t1)/sqrt(sum(longs$organic_C_n_t1))
+sum(longs$organic_C_n_t1)
+length(longs$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - FLOOD/FURROW
+***************************************************************
+
+
+```{r}
+tempirrig1 <- split(short, short$irrig_methodcat=="floodfurr")
+shortf <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(medium, medium$irrig_methodcat=="floodfurr")
+mediumf <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(long, long$irrig_methodcat=="floodfurr")
+longf <- tempirrig3$'TRUE'
+```
+
+SHORT
+```{r}
+w.mean(shortf$per_OC_st_change,shortf$organic_C_n_t1)
+w.sd(shortf$per_OC_st_change,shortf$organic_C_n_t1)/sqrt(sum(shortf$organic_C_n_t1))
+sum(shortf$organic_C_n_t1)
+length(shortf$organic_C_n_t1)
+```
+
+MEDIUM
+```{r}
+w.mean(mediumf$per_OC_st_change,mediumf$organic_C_n_t1)
+w.sd(mediumf$per_OC_st_change,mediumf$organic_C_n_t1)/sqrt(sum(mediumf$organic_C_n_t1))
+sum(mediumf$organic_C_n_t1)
+length(mediumf$organic_C_n_t1)
+```
+
+LONG
+```{r}
+w.mean(longf$per_OC_st_change,longf$organic_C_n_t1)
+w.sd(longf$per_OC_st_change,longf$organic_C_n_t1)/sqrt(sum(longf$organic_C_n_t1))
+sum(longf$organic_C_n_t1)
+length(longf$organic_C_n_t1)
+```

@@ -1,0 +1,207 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(Weighted.Desc.Stat)
+```
+
+```{r}
+# Load dataset
+suppressWarnings(suppressMessages({
+    datacsv <- read_csv("datasets/irrt1vt2_estBD_may11.csv")
+    dataset <- data.frame(datacsv)
+}))
+```
+
+<b>Note:</b> There are a couple of massive outliers in the dataset, 5 - 10x the change in OC seen in any other study.  Thes rows of data have been removed from the dataset.
+
+```{r}
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+```
+
+```{r}
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+# Split Africa dataset by Depth
+d <- dataset %>% group_split(study_duration_cat)
+short <- as.data.frame(d[3])
+medium <- as.data.frame(d[2])
+long <- as.data.frame(d[1])
+```
+
+
+
+***************************************************************
+OC Stock - SHORT
+***************************************************************
+
+```{r}
+tempirrig1 <- split(short, short$depth_cat_2=="0-10cm")
+short10 <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(short, short$depth_cat_2=="10-20cm")
+short20 <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(short, short$depth_cat_2=="20-30cm")
+short30 <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(short, short$depth_cat_2=="30+cm")
+short30p <- tempirrig4$'TRUE'
+```
+
+0-10cm
+```{r}
+w.mean(short10$per_OC_st_change,short10$organic_C_n_t1)
+w.sd(short10$per_OC_st_change,short10$organic_C_n_t1)/sqrt(sum(short10$organic_C_n_t1))
+sum(short10$organic_C_n_t1)
+length(short10$organic_C_n_t1)
+```
+
+10-20cm
+```{r}
+w.mean(short20$per_OC_st_change,short20$organic_C_n_t1)
+w.sd(short20$per_OC_st_change,short20$organic_C_n_t1)/sqrt(sum(short20$organic_C_n_t1))
+sum(short20$organic_C_n_t1)
+length(short20$organic_C_n_t1)
+```
+
+20-30cm
+```{r}
+w.mean(short30$per_OC_st_change,short30$organic_C_n_t1)
+w.sd(short30$per_OC_st_change,short30$organic_C_n_t1)/sqrt(sum(short30$organic_C_n_t1))
+sum(short30$organic_C_n_t1)
+length(short30$organic_C_n_t1)
+```
+
+30+cm
+```{r}
+w.mean(short30p$per_OC_st_change,short30p$organic_C_n_t1)
+w.sd(short30p$per_OC_st_change,short30p$organic_C_n_t1)/sqrt(sum(short30p$organic_C_n_t1))
+sum(short30p$organic_C_n_t1)
+length(short30p$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - MEDIUM
+***************************************************************
+
+```{r}
+tempirrig1 <- split(medium, medium$depth_cat_2=="0-10cm")
+medium10 <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(medium, medium$depth_cat_2=="10-20cm")
+medium20 <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(medium, medium$depth_cat_2=="20-30cm")
+medium30 <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(medium, medium$depth_cat_2=="30+cm")
+medium30p <- tempirrig4$'TRUE'
+```
+
+0-10cm
+```{r}
+w.mean(medium10$per_OC_st_change,medium10$organic_C_n_t1)
+w.sd(medium10$per_OC_st_change,medium10$organic_C_n_t1)/sqrt(sum(medium10$organic_C_n_t1))
+sum(medium10$organic_C_n_t1)
+length(medium10$organic_C_n_t1)
+```
+
+10-20cm
+```{r}
+w.mean(medium20$per_OC_st_change,medium20$organic_C_n_t1)
+w.sd(medium20$per_OC_st_change,medium20$organic_C_n_t1)/sqrt(sum(medium20$organic_C_n_t1))
+sum(medium20$organic_C_n_t1)
+length(medium20$organic_C_n_t1)
+```
+
+20-30cm
+```{r}
+w.mean(medium30$per_OC_st_change,medium30$organic_C_n_t1)
+w.sd(medium30$per_OC_st_change,medium30$organic_C_n_t1)/sqrt(sum(medium30$organic_C_n_t1))
+sum(medium30$organic_C_n_t1)
+length(medium30$organic_C_n_t1)
+```
+
+30+cm
+```{r}
+w.mean(medium30p$per_OC_st_change,medium30p$organic_C_n_t1)
+w.sd(medium30p$per_OC_st_change,medium30p$organic_C_n_t1)/sqrt(sum(medium30p$organic_C_n_t1))
+sum(medium30p$organic_C_n_t1)
+length(medium30p$organic_C_n_t1)
+```
+
+
+***************************************************************
+OC Stock - LONG
+***************************************************************
+
+```{r}
+tempirrig1 <- split(long, long$depth_cat_2=="0-10cm")
+long10 <- tempirrig1$'TRUE'
+
+tempirrig2 <- split(long, long$depth_cat_2=="10-20cm")
+long20 <- tempirrig2$'TRUE'
+
+tempirrig3 <- split(long, long$depth_cat_2=="20-30cm")
+long30 <- tempirrig3$'TRUE'
+
+tempirrig4 <- split(long, long$depth_cat_2=="30+cm")
+long30p <- tempirrig4$'TRUE'
+```
+
+0-10cm
+```{r}
+w.mean(long10$per_OC_st_change,long10$organic_C_n_t1)
+w.sd(long10$per_OC_st_change,long10$organic_C_n_t1)/sqrt(sum(long10$organic_C_n_t1))
+sum(long10$organic_C_n_t1)
+length(long10$organic_C_n_t1)
+```
+
+10-20cm
+```{r}
+w.mean(long20$per_OC_st_change,long20$organic_C_n_t1)
+w.sd(long20$per_OC_st_change,long20$organic_C_n_t1)/sqrt(sum(long20$organic_C_n_t1))
+sum(long20$organic_C_n_t1)
+length(long20$organic_C_n_t1)
+```
+
+20-30cm
+```{r}
+w.mean(long30$per_OC_st_change,long30$organic_C_n_t1)
+w.sd(long30$per_OC_st_change,long30$organic_C_n_t1)/sqrt(sum(long30$organic_C_n_t1))
+sum(long30$organic_C_n_t1)
+length(long30$organic_C_n_t1)
+```
+
+30+cm
+```{r}
+w.mean(long30p$per_OC_st_change,long30p$organic_C_n_t1)
+w.sd(long30p$per_OC_st_change,long30p$organic_C_n_t1)/sqrt(sum(long30p$organic_C_n_t1))
+sum(long30p$organic_C_n_t1)
+length(long30p$organic_C_n_t1)
+```
