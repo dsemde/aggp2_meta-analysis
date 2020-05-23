@@ -38,7 +38,7 @@ coarse$col <- as.character(coarse$col)
 plot(coarse$ID ~ coarse$Mean_Perc, lwd=2
      , las=1
      , xaxt='n', yaxt='n'
-     , xlim = c(-35, 90)
+     , xlim = c(-45, 90)
      , xlab = '', ylab='', main=''
      , col = coarse$col
      , pch = 20
@@ -51,7 +51,7 @@ arrows(coarse$Low_Perc, coarse$ID, coarse$High_Perc, coarse$ID
 abline(v=0, col="red", lty=2, lwd=2)
 
 
-axis (side = 1, at = seq(-20, 85, 10), labels = seq(-20, 85, 10)
+axis (side = 1, at = seq(-40, 90, 10), labels = seq(-40, 90, 10)
       , cex=1
       , las = 1)
 
@@ -59,11 +59,15 @@ axis (side = 2, at = coarse$ID, labels = paste(coarse$SubGroup, sep = "")
       , cex=1
       , las = 2)
 
-text(ifelse(coarse$High_Perc > 70, coarse$Low_Perc-15, coarse$High_Perc+15), coarse$ID
-     , paste(coarse$obs,"/",coarse$n_study, sep = ""), cex=0.85, adj=0)
+text(ifelse(coarse$High_Perc > 85, coarse$Low_Perc-7, coarse$High_Perc+4), coarse$ID
+     , paste(coarse$n_study), cex=0.85, adj=0)
 
 # Separation lines
-abline(h=c(6,12), col="black", lty=3, lwd=2)
+abline(h=c(5,10), col="black", lty=3, lwd=2)
+
+mtext("Short Duration", side=2, cex=0.75, adj=0.95, outer = T, line = 4)
+mtext("Medium Duration", side=2, cex=0.75, outer = T, line = 4)
+mtext("Long Duration", side=2, cex=0.75, adj=0.05, outer = T, line = 4)
 
 mtext("Coarse Texture", side=3, cex=0.75)
 
@@ -82,7 +86,7 @@ medium$col <- as.character(medium$col)
 plot(medium$ID ~ medium$Mean_Perc, lwd=2
      , las=1
      , xaxt='n', yaxt='n'
-     , xlim = c(-35, 90)
+     , xlim = c(-45, 90)
      , xlab = '', ylab='', main=''
      , col = medium$col
      , pch = 20
@@ -95,15 +99,15 @@ arrows(medium$Low_Perc, medium$ID, medium$High_Perc, medium$ID
 abline(v=0, col="red", lty=2, lwd=2)
 
 
-axis (side = 1, at = seq(-20, 85, 10), labels = seq(-20, 85, 10)
+axis (side = 1, at = seq(-40, 90, 10), labels = seq(-40, 90, 10)
       , cex=1
       , las = 1)
 
-text(ifelse(medium$High_Perc > 70, medium$Low_Perc-15, medium$High_Perc+15), medium$ID
-     , paste(medium$obs,"/",medium$n_study, sep = ""), cex=0.85, adj=0)
+text(ifelse(medium$High_Perc > 85, medium$Low_Perc-7, medium$High_Perc+5), medium$ID
+     , paste(medium$n_study), cex=0.85, adj=0)
 
 # Separation lines
-abline(h=c(6,12), col="black", lty=3, lwd=2)
+abline(h=c(5,10), col="black", lty=3, lwd=2)
 
 mtext("Medium Texture", side=3, cex=0.75)
 
@@ -120,7 +124,7 @@ fine$col <- as.character(fine$col)
 plot(fine$ID ~ fine$Mean_Perc, lwd=2
      , las=1
      , xaxt='n', yaxt='n'
-     , xlim = c(-35, 90)
+     , xlim = c(-45, 90)
      , xlab = '', ylab='', main=''
      , col = fine$col
      , pch = 20
@@ -133,15 +137,15 @@ arrows(fine$Low_Perc, fine$ID, fine$High_Perc, fine$ID
 abline(v=0, col="red", lty=2, lwd=2)
 
 
-axis (side = 1, at = seq(-20, 85, 10), labels = seq(-20, 85, 10)
+axis (side = 1, at = seq(-40, 90, 10), labels = seq(-40, 90, 10)
       , cex=1
       , las = 1)
 
-text(ifelse(fine$High_Perc > 70, fine$Low_Perc-15, fine$High_Perc+15), fine$ID
-     , paste(fine$obs,"/",fine$n_study, sep = ""), cex=0.85, adj=0)
+text(ifelse(fine$High_Perc > 85, fine$Low_Perc-7, fine$High_Perc+5), fine$ID
+     , paste(fine$n_study), cex=0.85, adj=0)
 
 # Separation lines
-abline(h=c(6,12), col="black", lty=3, lwd=2)
+abline(h=c(5,10), col="black", lty=3, lwd=2)
 
 mtext("Fine Texture", side=3, cex=0.75)
 
