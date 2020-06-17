@@ -17,8 +17,6 @@ d30p <- as.data.frame(d[4])
 
 ymin <- min(sum_data$per_OC_st_change)
 ymax <- max(sum_data$per_OC_st_change)
-#xmin <- min(sum_data$years_since_irrig_t1)
-#xmax <- max(sum_data$years_since_irrig_t1)
 
 # Set TIFF output parameters
 tiff("duration_vs_oc.tiff", width = 12, height = 3, units = 'in', res = 300)
@@ -28,7 +26,6 @@ par( mar=c(2, 0.2, 0.2, 0.2)
      , omi = c(0.5, 1.75, 0.1, 0.1)  # by inches, outer margin 
      , mgp = c(0, 0.3, 0) # set distance of axis
      , tcl = 0.4
-     # , cex.axis = 1.0
      , mfrow=c(1,4))
 
 
