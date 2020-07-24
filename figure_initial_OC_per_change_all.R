@@ -6,7 +6,7 @@ library(ggplot2)
 library(WeMix)
 library(ggthemes)
 
-sum_data <- read_csv("datasets/irrt1vt2_estBD_may22.csv")
+sum_data <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
 
 temp_dataset <- split(sum_data, sum_data$ref_num=="24")
 sum_data <- temp_dataset$'FALSE'
@@ -26,8 +26,8 @@ sum_data <- rbind(dataseta, datasetb)
 
 sum_data$aridity_category <- factor(sum_data$aridity_category, levels = c("Arid", "Semi-Arid", "Dry sub-humid", "Humid"))
 
-ymin <- min(sum_data$per_OC_st_change)
-ymax <- max(sum_data$per_OC_st_change)
+ymin <- -100 #min(sum_data$per_OC_st_change)
+ymax <- 100 #max(sum_data$per_OC_st_change)
 
 tiff("initial_OC_per_change_all.tiff", width = 5, height = 3, units = 'in', res = 300)
 
@@ -46,16 +46,15 @@ lm_fit <- lm(per_OC_st_change ~ organic_C_st_t1, data=sum_data)
 # together with variable you want to plot against
 predicted_df <- data.frame(OC_pred = predict(lm_fit, sum_data), OCt1=sum_data$organic_C_st_t1)
 
-p <- ggplot(sum_data, aes(x=organic_C_st_t1, y=per_OC_st_change, color=aridity_category)) + scale_color_manual(values = c("#00AFBB", "#E7B800", "#71f442", "#fc79e6")) + geom_point() + geom_line(color='black',data = predicted_df, aes(x=OCt1, y=OC_pred)) + labs(y="SOC Change (%)", x="Initial SOC Stock") + coord_cartesian(ylim = c(ymin, ymax))
+x_label <- expression(paste("Initial SOC stock (Mg ha"^"-1", ")"))
 
-p + theme_minimal() + theme(legend.position = "top", legend.title = element_blank(),
+p <- ggplot(sum_data, aes(x=organic_C_st_t1, y=per_OC_st_change, color=aridity_category)) + scale_color_manual(values = c("#f089de", "#e0c148", "#84e362", "#5cafb5")) + geom_point() + geom_line(color='black',data = predicted_df, aes(x=OCt1, y=OC_pred)) + labs(y="SOC Change (%)", x=x_label) + coord_cartesian(ylim = c(ymin, ymax))
+
+p + theme_bw() + theme(legend.position = "top", legend.title = element_blank(),
                         axis.text.x = element_text(size = 6),
                         axis.text.y = element_text(size = 6),  
                         axis.title.x = element_text(size = 8),
-                        axis.title.y = element_text(size = 8))
+                        axis.title.y = element_text(size = 8)) + annotate("text", x = 50, y = 45, label = "y = 23.96 - 0.6234x", size=2)
 
-# annotate_figure(figure,
-#                 bottom = text_grob("Initial SOC Stock (Mg/ha)"),
-#                 left = text_grob("SOC stock change (%)", rot = 90))
 
 dev.off()

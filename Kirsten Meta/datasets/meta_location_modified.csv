@@ -1,0 +1,83 @@
+ref,authors,year,continent,country,latitude,lat_extract,longitude,lon_extract,elevation,climatic_zone,annual_rainfall,,,,,,,,,,,,,,,,,,,,,,,,,,
+1,"Dimza, I., Gross, A., Skrivele, M, Rubauskis, E.",2008,Europe,Latvia,56.6115475 N,56.6115475,23.2960888 E,23.2960888,63,Continental Humid,63.6, ,,,,,,,,,,,,,,Organic matter: report data and calculate %C,,,,,,,,,,,"Wood - woodchip and bark mulch, shredded wood,Sawdust, Subabul Loppings"
+2,"Feldmane, D., Butac, M., Militaru, M., Kalva, E., Grotuze, S., Missa, I., Sproge, L., Cirsa, E.",2019,Europe,Latvia,56.61667° N,56.61667,23.26667°' E,23.26667,44,Continental Humid,57.6, ,,,,,,,,,,,,,,Add WFPS data (and note specifying),,,,,,,,,,,"Paper - shredded paper, paper sludge, spray on paper"
+3,"Granatstein, D., Wiman, M., Kirby, E., Mullinix, K.",2010,North America,USA,47.42139° N,47.42139,120.2881° W,-120.2881,217,Koppen-Geiger Climate Zone - Cold Semi-Arid Climate,21.5,,,,,,,,,,,,,,,Enter n values from methodology section,,,,,,,,,,,"Grass - mowed grass & grass clippings, reeds/rushes, cattail weed, hard fescue, mowed alleyway residue"
+4,"Leinfelder, M. M., Merwin, I. A., Brown, M. G.",2012,North America,USA,42.44333° N,42.44333,76.5° W,-76.5,123,"Koppen-Geiger Climate Zone: Dfb - Humid Continental Mild Summer, Wet All Year",93.98, ,, ,,,,,,,,,,,,Make sure herbicides are used as control when possible (make note of other options),,,,,,,,,,,"Manure - composted chicken manure, manure compost mulch"
+5,"Pole, V., Feldmane, D., Ruisa, S., Butac, M.",2017,Europe ,Latvia,56.6115475 N,56.6115475,23.2960888 E,23.2960888,63,Continental Humid,63.6, ,, ,,,,,,,,,,,,Look up climate/geography info that isn’t included,,,,,,,,,,,
+6,"Scibisz, K., Sadowski, A.",1995,Europe ,Poland,52.157° N,52.157,21.04217° E,21.04217,100, humid continental,50.1,,, ,,,,,,,,,,,,Do any unit conversions required,,,,,,,,,,,
+7,"Shylla, B., Chauhan, J. S.",2004,Asia,India,30.9084° N,30.9084,77.0999° E,77.0999,1124,Sub-tropical to temperate,141.3,,, ,,,,,,,,,,,,Specify in notes if fertilizer is annual or not,,,,,,,,,,,Control Legend
+8,"Solomakhin, A. A., Trunov, Y. V., Blanke, M., Noga, G.",2012,Europe,Russia,52.89778° N,52.89778,40.49083° E,40.49083,148,Köppen Classification: Warm Summer Continental Climate,54.5, ,, ,,,,,,,,,,,,Double check if data is separated by years,,,,,,,,,,,Mowed - 
+9,"Van Schoor, L., Stassen, P. J. C., Botha, A.",2012,Africa,South Africa,34.13333° S,-34.13333,19.03333° E,19.03333,331,Hot-summer Mediterranean climate,46.4, ,, ,,,,,,,,,,,,Rounding graph extraction data…,,,,,,,,,,,"No Mulch - bare ground, chemical fertilizer, conventional farming (inorganic fertilizer)"
+10,"Varga, P., Majer, J.",2004,Europe,Hungary,46.8145° N,46.8145,17.3274° E,17.3274,438,"temperate; cold, cloudy, humid winters; warm summers",62.5, ,, ,,,,,,,,,,,,Remove correct units,,,,,,,,,,,Limited Weeding - hand weeding
+11,"Zhang, N. W., Zhao, P., Li, H. X., Zhao, M. X., Dong, C. X., Xu, Y. C",2018,Asia,China,37.2° N,37.2,104.0333° E,104.0333,2298, temperate arid and semi-arid continental,23.1, ,, ,,,,,,,,,,,,Put control data in each row,,,,,,,,,,,
+12,"Fentabil, M. M., Nichol, C. F., Jones, M. D., Neilsen, G. H., Neilsen, D., Hannam, K. D.",2016,North America,Canada,49.56639° N,49.56639,119.6367° W ,-119.6367,454,humid continental climate,34.6, ,, ,,,,,,,,,,,,Should we write down if values are significantly different or not?,,,,,,,,,,,
+13,"DeVetter, L. W., Dilley, C. A., Nonnecke, G. R.",2015,North America,USA,42.10806° N,42.10806,93.58583° W,-93.58583,287,continental climate,71.4, ,, ,,,,,,,,,,,,"Sig figs from graph - usually one decimal point, but can definitely change (look at y axis, extract to 1 decimal if it runs from 0-10, if it's 0-0.1 then add another decimal.",,,,,,, ,,,,HC - Heavy Clay
+14,"Ferrara, G., Fracchiolla, M., Chami, Z., Camposeo, S., Lasorella, C., Pacifico, A., Aly, A., Montemurro, P.",2012,Europe,Italy,41.23056° N,41.23056,16.29306° E,16.29306,383,"Mediterranin, hot dry summers",16.7,,,,,,,,,,,,,,,Decide what results we each want to focus on (I'm good w/ soil moisture or weed cover),,,,,,,,,,,SCL - Sandy Clay Loam
+15,"Hostetler, G. L., Merwin, I. A., Brown, M. G., Padilla-Zakour, O.",2007,North America,USA,42.57626° N,42.57626,76.87211° W,-76.87211,337,Humid Continental Mild Summer,85.2, ,, ,,,,,,,,,,,,,,,,,,,,,,,LS - Loamy Sand
+16,"Mathews, C., Bottrell, D., Brown, M",2002,North America,USA,39.35517° N ,39.35517,77.87692° W,-77.87692,164,Koppen-Geiger Climate Zone: Dfa - Humid Continental Hot Summers,101.6,,,  ,,,,,,,,,,,,,,,,,,,,,,,SI - Silt
+17,"Hoagland, L., Carpenter-Boggs, L., Granatstein, D., Mazzola, M., Smith, J., Peryea, F., Reganold, J. P.",2008,North America,USA,47.42139° N,47.42139,120.2881° W,-120.2881,217,Koppen-Geiger Climate Zone - Cold Semi-Arid Climate,21.6, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+18,"Neilsen, G. H., Hogue, E. J., Forge, T., Neilsen, D., Kuchta, S.",2007,North America,Canada,49.56639° N,49.56639,119.6367° W ,-119.6367,454,humid continental climate,34.6,,,,,,,,,,,,,,,,,,,,,,,,,,
+19,"Walsh, B. D., Salmins, S., Buszard, D. J., MacKenzie, A. F.",1996,North America,Canada,45.43333° N,45.43333,74.93333° W,-74.93333,1036.3,humid continental or hemiboreal,78.5, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+20,"Abouziena, H. F., Hafez, O. M., El-Metwally, I. M., Sharma, S. D., Singh, M.",2008,Africa,Egypt,30.65° N,30.65,31.86667° E,31.86667, ,Köppen-Geiger: hot desert (BWh), , ,, ,,,,,,,,,,,,,,,,,,,,,,,
+21,"Atucha, A., Merwin, I. A., Brown, M. G.",2011,North America,USA,42.81667° N,42.81667,76.81667° W,-76.81667,123,"Koppen-Geiger Climate Zone: Dfb - Humid Continental Mild Summer, Wet All Year",76, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+22,"Forge, T., Neilsen, G., Neilsen, D., Hogue, E., Faubion, D.",2013,North America,USA,46.7310° N,46.731,120.6995° W,-120.6995,449,Koppen-Geiger Climate Zone: BSk - Cold Semi-Arid Climate,22.86, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+23,"Granatstein, D., Mullinix, K.",2008,North America,USA,47.42139° N,47.42139,120.2881° W,-120.2881,217,Semi-arid,21.5, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+24,"Hogue, E. J., Cline, J. A., Neilsen, G., Neilsen, D.",2010,North America,Canada,49.56639° N,49.56639,119.6367° W ,-119.6367,454,humid continental climate,34.6, ,, ,,,,,,,,,,,,,,,,,,,,,,,
+25,"Neilsen, G. H., Hogue, E. J., Forge, T., Neilsen, D.",2003,North America,Canada,49.56639° N,49.56639,119.6367° W ,-119.6367,454,humid continental climate,34.6, ,,,,,,,,,,,,,,,,,,,,,,,,,
+26,"TerAvest, D., Smith, J. L., Carpenter-Boggs, L., Hoagland, L., Granatstein, D., Reganold, J. P.",2010,North America,USA,47.42139° N,47.42139,120.2881° W,-120.2881,217,Koppen-Geiger Climate Zone - Cold Semi-Arid Climate,21.6,  ,, ,,,,,,,,,,,,,,,,,,,,,,,
+27,"Yao, S., Merwin, I. A., Brown, M. G.",2009,North America,USA,42.81667° N,42.81667,76.81667° W,-76.81667,123,"Koppen-Geiger Climate Zone: Dfb - Humid Continental Mild Summer, Wet All Year",76, ,,,,,,,,,,,,,,,,,,,,,,,,,
+28,"Belding, R. Majek, B. A.,Lokaj, G. R. W.,Hammerstedt, J.,Ayeni, A. O.",2004,North America,USA,39.518899N,39.518899,75.205200 W,-75.2052,3,Humid Subtropical Climate,114.3, ,,,,,,,,,,,,,,,,,,,,,,,,,
+29,"Lisek, J.,Buler, Z.
+",2018,Europe,Polland,51.55 N,51.55,20.06 E,20.06,411,temperate climate,49.6, ,,,,,,,,,,,,,,,,,,,,,,,,,
+30,"Lordan, J.,Pascual, M.Villar, J. M.,Fonseca, F.,Papió, J.,Montilla, V.,Rufat, J.
+",2015,Europe,Spain,41.71611° N,41.71611,0.01472222° E,0.01472222,135,semi-arid Mediterranean,35, ,,,,,,,,,,,,,,,,,,,,,,,,,
+31,"Wheaton, A. D.,McKenzie, B. M.,Tisdall, J. M.
+
+  ",2008,Australia,Australia,35.98333° S,-35.98333,145.1° E,145.1,62," hot and semi-arid in the northwest to cooler, temperate", , ,,,,,,,,,,,,,,,,,,,,,,,,,
+32,"López, R.,Burgos, P.,Hermoso, J. M.,Hormaza, J. I.,González-Fernández, J. J.",2014,Europe,SE Spain,36.72122° N,36.72122,4.421472° W,-4.421472,11,subtropical-Mediterranean, , ,,,,,,,,,,,,,,,,,,,,,,,,,
+33,"Ferrara, G.,Mazzeo, A.,Matarrese, A. M. S.,Pacifico, A.,Fracchiolla, M.,Al Chami, Z.,Lasorella, C.,Montemurro, P.,Mondelli, D.
+",2014,europe, Italy,41.12 N,41.12,16.87 E,16.87,5,Mediterranean hot summer climates,56.7, ,,,,,,,,,,,,,,,,,,,,,,,,,
+34,"Chen, Y.,Wen, X.,Sun, Y.,Zhang, J.,Wu, W.,Liao, Y.
+",2014,asia,China,35.565° N,35.565,109° E,109,1084,continental monsoon climate,66.2, ,,,,,,,,,,,,,,,,,,,,,,,,,
+35,"Sajid, M.,Ahmad, S.,Jaskani, M. J.,Yasin, M.
+",2018,Asia,Ppakistan,31.43333° N,31.43333,73.1° E,73.1,185,semi-arid climate and moderate climate,2.287, ,,,,,,,,,,,,,,,,,,,,,,,,,
+36,"St. Laurent, A.,Merwin, I. A.,Thies, J. E.
+",2008,north America,USA,42.49 N,42.49,76.51 W,-76.51,262, humid continental,96.52, ,,,,,,,,,,,,,,,,,,,,,,,,,
+37,"Oliveira, M. T.,Merwin, I. A.
+",2001,north America,USA,42.456296 N,42.456296,76.510467 W,-76.510467,404 ,moderate continental climate.,93.98, ,,,,,,,,,,,,,,,,,,,,,,,,,
+38,"Neilsen, G.,Forge, T.Angers, D.,Neilsen, D.,Hogue, E.
+",2014,north America,Canada,49.56652 N,49.56652,119.63604 W,-119.63604,412,humid continental climate,30.734, ,,,,,,,,,,,,,,,,,,,,,,,,,
+39,"Bavougian, C. M.,Read, P. E.
+",2018,North America,USA,41.18N,41.18,97.00 W,-97,510,humid continental, , ,,,,,,,,,,,,,,,,,,,,,,,,,
+40,"Sanchez, J. E.,Edson, C. E.,Bird, G. W.,Whalon, M. E.,Willson, T. C.,Harwood, R. R.,Kizilkaya, K.,Nugent, J. E.,Klein, W.,Middleton, A.,Loudon, T. L.,Mutch, D. R., Scrimger, J.
+
+
+",2003,North America,USA,44.882005 N,44.882005,85.67529 W,-85.67529,221,Warm-summer humid continental,72, ,,,,,,,,,,,,,,,,,,,,,,,,,
+41,"Pinamonti, F.",1998,Europe,Italy,45.976348 N,45.976348,11.117292 E,11.117292,210,Humid subtropical climate,90, ,,,,,,,,,,,,,,,,,,,,,,,,,
+42,"Treder Waldemar,Krzysztof Klamkowski,Augusty Mika,Augusty 
+Wojcik,Pawel Wojcik",2004,Europe,Polland,51.961416 N,51.961416,20.15274 E,20.15274,138,temperate,50, ,,,,,,,,,,,,,,,,,,,,,,,,,
+43,"Susaj, L.,Susaj, E.,Belegu, M.,Mustafa, S.,Dervishi, B.,Ferraj, B.
+",2013,Europe,Albania,42.288831 N,42.288831,19.50305 E,19.50305,708,Mediterranean,125, ,,,,,,,,,,,,,,,,,,,,,,,,,
+44,"Kumari, R.,Kundu, M.,Das, A.,Rakshit, R.,Sahay, S.,Sengupta, S.,Ahmad, M. F.
+",2020,Asia,India,22.95114°N,22.95114,87.03444° E,87.03444,448,modified tropical monsoon,117, ,,,,,,,,,,,,,,,,,,,,,,,,,
+45,"Ferraj, Bardhosh,Teqja, Zydi,Susaj, Lush, Fasllia, Ndoc,Gjeta, Zef,Vata, Ndoc,Balliu, Astrit",2011,Europe,Albania,40.450938 N,40.450938,19.490776 E,19.490776,708,Mediterranean ,150, ,,,,,,,,,,,,,,,,,,,,,,,,,
+46,"Hussain, S.,Sharma, M. K.,War, A. R.,Hussain, B.
+",2020,Asia,India,34.15° N,34.15,74.86667° E,74.86667,1500,temperate,65, ,,,,,,,,,,,,,,,,,,,,,,,,,
+47,"Sumeet, Sharma,Sharma, D. P.",2019,Asia,India,30.85° N ,30.85,76.18333° E,76.18333,1250,himid subtropical,4.716667, ,,,,,,,,,,,,,,,,,,,,,,,,,
+48,"Brar, J. S.,Gill, K. S.,Arora, N. K.,Arora, N. K.,Tarundeep, Kaur
+
+",2017,Asia,India,30.90089 N,30.90089,75.807359 E,75.807359,262, semi-arid,72.6, ,,,,,,,,,,,,,,,,,,,,,,,,,
+49,"Sharma, D. P.,Negi, P.Sharma, S.
+Negi, P.
+Sharma, S.",2019,Asia,India,31.847192 N,31.847192,76.874744 E,76.874744,1250,sub-humid mid hill,11, ,,,,,,,,,,,,,,,,,,,,,,,,,
+50,"Sharma, S.,Sharma, D. P.",2019,Asia,India,30.85° N,30.85,30.85° E,30.85,1250,sub-humid mid hill,11, ,,,,,,,,,,,,,,,,,,,,,,,,,
+51,"Das, Biswajit,Harekrishna,Ranjan, J K,Pragya,Ahmed, N,Attri, B L",2016,Asia,India,29.459177 N,29.459177,79.656114 E,79.656114,2133,subtropical highland,147.9, ,,,,,,,,,,,,,,,,,,,,,,,,,
+52,"Fredrikson, L.,Skinkis, P. A.,Peachey, E.",2011,North America,USA,44.77 N,44.77,123.18 W,-123.18,60,temperate oceanic,109.22, ,,,,,,,,,,,,,,,,,,,,,,,,,
+53,"Cline, J.,Neilsen, G.,Hogue, E.,Kuchta, S.,Neilsen, D.",2011,North America,Canada,49.74222° N,49.74222,119.7719° W,-119.7719,360,humid continental,30.9, ,,,,,,,,,,,,,,,,,,,,,,,,,
+54,"Cline, J.,Neilsen, G.,Hogue, E.,Kuchta, S.,Neilsen, D.",2011,North America,Canada,49.57139° N,49.57139,119.6361° W,-119.6361,454,humid continental,33.7, ,,,,,,,,,,,,,,,,,,,,,,,,,
+55,"Cline, J.,Neilsen, G.,Hogue, E.,Kuchta, S.,Neilsen, D.",2011,North America,Canada,49.56639° N,49.56639,119.6367° W,-119.6367,454,humid continental,33.7, ,,,,,,,,,,,,,,,,,,,,,,,,,
+56,"TerAvest, Dan,Smith, Jeffrey L.,Carpenter-Boggs, Lynne,Granatstein, David,Hoagland, Lori
+,Reganold, John P.
+",2011,North America,USA,47.430305 N,47.430305,120.335437 E,120.335437,236,dry-summer subtropical,21.6, ,,,,,,,,,,,,,,,,,,,,,,,,,
+57,"Sharma, S.,Sharma, D. P.",2018,Asia,India,31.223912 N,31.223912,76.967797 E,76.967797,1551,humid subtropica,141.3, ,,,,,,,,,,,,,,,,,,,,,,,,,
+58,"Singh, A. K.,Singh, S.,Appa Rao, V. V.,Bagle, B. G.,More, T. A.",2010,Asia,India,22.6102 N,22.6102,73.463138 E,73.463138,81,semi-arid hot climate,80.34, ,,,,,,,,,,,,,,,,,,,,,,,,,

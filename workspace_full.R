@@ -50,7 +50,7 @@ check_split_irrigation <- function(df, cat){
 }
 
 # Load dataset
-datacsv <- read_csv("datasets/irrt1vt2_estBD_may22.csv")
+datacsv <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
 dataset <- data.frame(datacsv)
 
 # Remove outliers

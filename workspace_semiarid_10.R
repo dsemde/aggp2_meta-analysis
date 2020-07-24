@@ -30,7 +30,7 @@ check_split_depth <- function(df, cat){
 }
 
 # Load dataset
-datacsv <- read_csv("datasets/irrt1vt2_estBD_may22.csv")
+datacsv <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
 dataset <- data.frame(datacsv)
 
 # Remove outliers
@@ -76,7 +76,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_short$organic_C_n_t1)
 n_study <- length(dataset_short$organic_C_n_t1)
-output <- c("7", "aridity", "Short Duration", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
+output <- c("7", "aridity", "Short", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
 
 # Medium
 mean <- check_NaN(w.mean(dataset_medium$per_OC_st_change,dataset_medium$organic_C_n_t1))
@@ -85,7 +85,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_medium$organic_C_n_t1)
 n_study <- length(dataset_medium$organic_C_n_t1)
-add_row <- c("6", "aridity", "Medium Duration", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("6", "aridity", "Medium", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # Long
@@ -95,7 +95,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_long$organic_C_n_t1)
 n_study <- length(dataset_long$organic_C_n_t1)
-add_row <- c("5", "aridity", "Long Duration", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("5", "aridity", "Long", "Semi-Arid", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 
@@ -125,7 +125,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_short$organic_C_n_t1)
 n_study <- length(dataset_short$organic_C_n_t1)
-add_row<- c("3", "aridity", "Short Duration", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
+add_row<- c("3", "aridity", "Short", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
 output <- rbind(output, add_row)
 
 # Medium
@@ -135,7 +135,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_medium$organic_C_n_t1)
 n_study <- length(dataset_medium$organic_C_n_t1)
-add_row <- c("2", "aridity", "Medium Duration", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
+add_row <- c("2", "aridity", "Medium", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
 output <- rbind(output, add_row)
 
 # Long
@@ -145,7 +145,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(dataset_long$organic_C_n_t1)
 n_study <- length(dataset_long$organic_C_n_t1)
-add_row <- c("1", "aridity", "Long Duration", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
+add_row <- c("1", "aridity", "Long", "Sprinkler", mean, se, low, high, "cadetblue", obs, n_study)
 output <- rbind(output, add_row)
 
 

@@ -13,7 +13,7 @@ d30 <- as.data.frame(d[3])
 d30p <- as.data.frame(d[4])
 
 # Set TIFF output parameters
-tiff("OC Stock Full.tiff", width = 12, height = 4, units = 'in', res = 300)
+tiff("OC Stock Full june 23.tiff", width = 12, height = 4, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
