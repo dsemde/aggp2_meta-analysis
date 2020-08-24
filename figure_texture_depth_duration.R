@@ -69,7 +69,7 @@ mtext("Short Duration", side=2, cex=0.75, adj=0.95, outer = T, line = 4)
 mtext("Medium Duration", side=2, cex=0.75, outer = T, line = 4)
 mtext("Long Duration", side=2, cex=0.75, adj=0.05, outer = T, line = 4)
 
-mtext("Coarse Texture", side=3, cex=0.75)
+mtext("Coarse-texture", side=3, cex=0.75)
 
 mtext(side = 1, text = paste("Soil carbon stocks (% change)", sep=" "), line = 1, cex=0.75, outer = T, adj = 0.5)
 
@@ -109,7 +109,7 @@ text(ifelse(medium$High_Perc > 85, medium$Low_Perc-7, medium$High_Perc+5), mediu
 # Separation lines
 abline(h=c(5,10), col="black", lty=3, lwd=2)
 
-mtext("Medium Texture", side=3, cex=0.75)
+mtext("Medium-texture", side=3, cex=0.75)
 
 
 #****************************************************************************
@@ -147,6 +147,6 @@ text(ifelse(fine$High_Perc > 85, fine$Low_Perc-7, fine$High_Perc+5), fine$ID
 # Separation lines
 abline(h=c(5,10), col="black", lty=3, lwd=2)
 
-mtext("Fine Texture", side=3, cex=0.75)
+mtext("Fine-texture", side=3, cex=0.75)
 
 dev.off()
