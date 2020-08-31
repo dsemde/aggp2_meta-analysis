@@ -11,6 +11,9 @@ sum_data <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
 temp_dataset <- split(sum_data, sum_data$ref_num=="24")
 sum_data <- temp_dataset$'FALSE'
 
+temp_dataset <- split(sum_data, sum_data$ref_num=="19")
+sum_data <- temp_dataset$'FALSE'
+
 temp_dataset <- split(sum_data, sum_data$depth_cat_2=="0-10cm")
 sum_data <- temp_dataset$'TRUE'
 

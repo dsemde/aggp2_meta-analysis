@@ -39,6 +39,9 @@ dataset <- data.frame(datacsv)
 temp_dataset <- split(dataset, dataset$ref_num=="24")
 dataset <- temp_dataset$'FALSE'
 
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+
 # Factor whole dataset
 dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
 
@@ -100,7 +103,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short10$organic_C_n_t1)
 n_study <- length(short10$organic_C_n_t1)
-output <- c("17", "Arid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
+output <- c("14", "Arid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
 
 # 10-20cm
 mean <- check_NaN(w.mean(short20$per_OC_st_change,short20$organic_C_n_t1))
@@ -109,7 +112,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short20$organic_C_n_t1)
 n_study <- length(short20$organic_C_n_t1)
-add_row <- c("16", "Arid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("13", "Arid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -119,7 +122,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30$organic_C_n_t1)
 n_study <- length(short30$organic_C_n_t1)
-add_row <- c("15", "Arid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("12", "Arid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -129,18 +132,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30p$organic_C_n_t1)
 n_study <- length(short30p$organic_C_n_t1)
-add_row <- c("14", "Arid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("11", "Arid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Short
-mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
-se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(short$organic_C_n_t1)
-n_study <- length(short$organic_C_n_t1)
-add_row <- c("13", "Arid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Short
+# mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
+# se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(short$organic_C_n_t1)
+# n_study <- length(short$organic_C_n_t1)
+# add_row <- c("13", "Arid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -171,7 +174,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium10$organic_C_n_t1)
 n_study <- length(medium10$organic_C_n_t1)
-add_row <- c("11", "Arid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("9", "Arid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -181,7 +184,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium20$organic_C_n_t1)
 n_study <- length(medium20$organic_C_n_t1)
-add_row <- c("10", "Arid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("8", "Arid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -191,7 +194,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30$organic_C_n_t1)
 n_study <- length(medium30$organic_C_n_t1)
-add_row <- c("9", "Arid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("7", "Arid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -201,18 +204,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30p$organic_C_n_t1)
 n_study <- length(medium30p$organic_C_n_t1)
-add_row <- c("8", "Arid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("6", "Arid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Medium
-mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
-se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(medium$organic_C_n_t1)
-n_study <- length(medium$organic_C_n_t1)
-add_row <- c("7", "Arid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Medium
+# mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
+# se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(medium$organic_C_n_t1)
+# n_study <- length(medium$organic_C_n_t1)
+# add_row <- c("7", "Arid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -243,7 +246,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long10$organic_C_n_t1)
 n_study <- length(long10$organic_C_n_t1)
-add_row <- c("5", "Arid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("4", "Arid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -253,7 +256,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long20$organic_C_n_t1)
 n_study <- length(long20$organic_C_n_t1)
-add_row <- c("4", "Arid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("3", "Arid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -263,7 +266,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30$organic_C_n_t1)
 n_study <- length(long30$organic_C_n_t1)
-add_row <- c("3", "Arid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("2", "Arid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -273,18 +276,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30p$organic_C_n_t1)
 n_study <- length(long30p$organic_C_n_t1)
-add_row <- c("2", "Arid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("1", "Arid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Long
-mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
-se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(long$organic_C_n_t1)
-n_study <- length(long$organic_C_n_t1)
-add_row <- c("1", "Arid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Long
+# mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
+# se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(long$organic_C_n_t1)
+# n_study <- length(long$organic_C_n_t1)
+# add_row <- c("1", "Arid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 
@@ -333,7 +336,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short10$organic_C_n_t1)
 n_study <- length(short10$organic_C_n_t1)
-add_row <- c("17", "Semi-arid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("14", "Semi-arid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -343,7 +346,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short20$organic_C_n_t1)
 n_study <- length(short20$organic_C_n_t1)
-add_row <- c("16", "Semi-arid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("13", "Semi-arid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -353,7 +356,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30$organic_C_n_t1)
 n_study <- length(short30$organic_C_n_t1)
-add_row <- c("15", "Semi-arid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("12", "Semi-arid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -363,18 +366,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30p$organic_C_n_t1)
 n_study <- length(short30p$organic_C_n_t1)
-add_row <- c("14", "Semi-arid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("11", "Semi-arid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Short
-mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
-se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(short$organic_C_n_t1)
-n_study <- length(short$organic_C_n_t1)
-add_row <- c("13", "Semi-arid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Short
+# mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
+# se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(short$organic_C_n_t1)
+# n_study <- length(short$organic_C_n_t1)
+# add_row <- c("13", "Semi-arid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -405,7 +408,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium10$organic_C_n_t1)
 n_study <- length(medium10$organic_C_n_t1)
-add_row <- c("11", "Semi-arid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("9", "Semi-arid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -415,7 +418,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium20$organic_C_n_t1)
 n_study <- length(medium20$organic_C_n_t1)
-add_row <- c("10", "Semi-arid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("8", "Semi-arid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -425,7 +428,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30$organic_C_n_t1)
 n_study <- length(medium30$organic_C_n_t1)
-add_row <- c("9", "Semi-arid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("7", "Semi-arid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -435,18 +438,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30p$organic_C_n_t1)
 n_study <- length(medium30p$organic_C_n_t1)
-add_row <- c("8", "Semi-arid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("6", "Semi-arid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Medium
-mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
-se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(medium$organic_C_n_t1)
-n_study <- length(medium$organic_C_n_t1)
-add_row <- c("7", "Semi-arid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Medium
+# mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
+# se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(medium$organic_C_n_t1)
+# n_study <- length(medium$organic_C_n_t1)
+# add_row <- c("7", "Semi-arid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -477,7 +480,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long10$organic_C_n_t1)
 n_study <- length(long10$organic_C_n_t1)
-add_row <- c("5", "Semi-arid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("4", "Semi-arid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -487,7 +490,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long20$organic_C_n_t1)
 n_study <- length(long20$organic_C_n_t1)
-add_row <- c("4", "Semi-arid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("3", "Semi-arid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -497,7 +500,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30$organic_C_n_t1)
 n_study <- length(long30$organic_C_n_t1)
-add_row <- c("3", "Semi-arid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("2", "Semi-arid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -507,18 +510,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30p$organic_C_n_t1)
 n_study <- length(long30p$organic_C_n_t1)
-add_row <- c("2", "Semi-arid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("1", "Semi-arid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Long
-mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
-se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(long$organic_C_n_t1)
-n_study <- length(long$organic_C_n_t1)
-add_row <- c("1", "Semi-arid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Long
+# mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
+# se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(long$organic_C_n_t1)
+# n_study <- length(long$organic_C_n_t1)
+# add_row <- c("1", "Semi-arid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 #*********************************************************************************************************************************
 #*******************************     DRY SUB-HUMID     ***************************************************************************
@@ -565,7 +568,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short10$organic_C_n_t1)
 n_study <- length(short10$organic_C_n_t1)
-add_row <- c("17", "Dry sub-humid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("14", "Dry sub-humid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -575,7 +578,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short20$organic_C_n_t1)
 n_study <- length(short20$organic_C_n_t1)
-add_row <- c("16", "Dry sub-humid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("13", "Dry sub-humid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -585,7 +588,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30$organic_C_n_t1)
 n_study <- length(short30$organic_C_n_t1)
-add_row <- c("15", "Dry sub-humid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("12", "Dry sub-humid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -595,18 +598,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30p$organic_C_n_t1)
 n_study <- length(short30p$organic_C_n_t1)
-add_row <- c("14", "Dry sub-humid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("11", "Dry sub-humid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Short
-mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
-se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(short$organic_C_n_t1)
-n_study <- length(short$organic_C_n_t1)
-add_row <- c("13", "Dry sub-humid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Short
+# mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
+# se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(short$organic_C_n_t1)
+# n_study <- length(short$organic_C_n_t1)
+# add_row <- c("13", "Dry sub-humid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -637,7 +640,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium10$organic_C_n_t1)
 n_study <- length(medium10$organic_C_n_t1)
-add_row <- c("11", "Dry sub-humid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("9", "Dry sub-humid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -647,7 +650,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium20$organic_C_n_t1)
 n_study <- length(medium20$organic_C_n_t1)
-add_row <- c("10", "Dry sub-humid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("8", "Dry sub-humid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -657,7 +660,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30$organic_C_n_t1)
 n_study <- length(medium30$organic_C_n_t1)
-add_row <- c("9", "Dry sub-humid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("7", "Dry sub-humid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -667,18 +670,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30p$organic_C_n_t1)
 n_study <- length(medium30p$organic_C_n_t1)
-add_row <- c("8", "Dry sub-humid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("6", "Dry sub-humid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Medium
-mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
-se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(medium$organic_C_n_t1)
-n_study <- length(medium$organic_C_n_t1)
-add_row <- c("7", "Dry sub-humid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Medium
+# mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
+# se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(medium$organic_C_n_t1)
+# n_study <- length(medium$organic_C_n_t1)
+# add_row <- c("7", "Dry sub-humid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -709,7 +712,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long10$organic_C_n_t1)
 n_study <- length(long10$organic_C_n_t1)
-add_row <- c("5", "Dry sub-humid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("4", "Dry sub-humid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -719,7 +722,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long20$organic_C_n_t1)
 n_study <- length(long20$organic_C_n_t1)
-add_row <- c("4", "Dry sub-humid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("3", "Dry sub-humid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -729,7 +732,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30$organic_C_n_t1)
 n_study <- length(long30$organic_C_n_t1)
-add_row <- c("3", "Dry sub-humid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("2", "Dry sub-humid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -739,18 +742,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30p$organic_C_n_t1)
 n_study <- length(long30p$organic_C_n_t1)
-add_row <- c("2", "Dry sub-humid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("1", "Dry sub-humid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Long
-mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
-se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(long$organic_C_n_t1)
-n_study <- length(long$organic_C_n_t1)
-add_row <- c("1", "Dry sub-humid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Long
+# mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
+# se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(long$organic_C_n_t1)
+# n_study <- length(long$organic_C_n_t1)
+# add_row <- c("1", "Dry sub-humid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 #*********************************************************************************************************************************
 #*******************************     HUMID     ***********************************************************************************
@@ -798,7 +801,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short10$organic_C_n_t1)
 n_study <- length(short10$organic_C_n_t1)
-add_row <- c("17", "Humid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("14", "Humid", "0-10 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -808,7 +811,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short20$organic_C_n_t1)
 n_study <- length(short20$organic_C_n_t1)
-add_row <- c("16", "Humid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("13", "Humid", "10-20 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -818,7 +821,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30$organic_C_n_t1)
 n_study <- length(short30$organic_C_n_t1)
-add_row <- c("15", "Humid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("12", "Humid", "20-30 cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -828,18 +831,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(short30p$organic_C_n_t1)
 n_study <- length(short30p$organic_C_n_t1)
-add_row <- c("14", "Humid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("11", "Humid", "30+ cm", "short", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Short
-mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
-se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(short$organic_C_n_t1)
-n_study <- length(short$organic_C_n_t1)
-add_row <- c("13", "Humid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Short
+# mean <- check_NaN(w.mean(short$per_OC_st_change,short$organic_C_n_t1))
+# se <- check_se(w.sd(short$per_OC_st_change,short$organic_C_n_t1)/sqrt(sum(short$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(short$organic_C_n_t1)
+# n_study <- length(short$organic_C_n_t1)
+# add_row <- c("13", "Humid", "Short Duration", "short", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -870,7 +873,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium10$organic_C_n_t1)
 n_study <- length(medium10$organic_C_n_t1)
-add_row <- c("11", "Humid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("9", "Humid", "0-10 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -880,7 +883,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium20$organic_C_n_t1)
 n_study <- length(medium20$organic_C_n_t1)
-add_row <- c("10", "Humid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("8", "Humid", "10-20 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -890,7 +893,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30$organic_C_n_t1)
 n_study <- length(medium30$organic_C_n_t1)
-add_row <- c("9", "Humid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("7", "Humid", "20-30 cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -900,18 +903,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(medium30p$organic_C_n_t1)
 n_study <- length(medium30p$organic_C_n_t1)
-add_row <- c("8", "Humid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("6", "Humid", "30+ cm", "medium", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Medium
-mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
-se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(medium$organic_C_n_t1)
-n_study <- length(medium$organic_C_n_t1)
-add_row <- c("7", "Humid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Medium
+# mean <- check_NaN(w.mean(medium$per_OC_st_change,medium$organic_C_n_t1))
+# se <- check_se(w.sd(medium$per_OC_st_change,medium$organic_C_n_t1)/sqrt(sum(medium$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(medium$organic_C_n_t1)
+# n_study <- length(medium$organic_C_n_t1)
+# add_row <- c("7", "Humid", "Medium Duration", "medium", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 
 #***************************************************************
@@ -942,7 +945,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long10$organic_C_n_t1)
 n_study <- length(long10$organic_C_n_t1)
-add_row <- c("5", "Humid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("4", "Humid", "0-10 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 10-20cm
@@ -952,7 +955,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long20$organic_C_n_t1)
 n_study <- length(long20$organic_C_n_t1)
-add_row <- c("4", "Humid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("3", "Humid", "10-20 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 20-30cm
@@ -962,7 +965,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30$organic_C_n_t1)
 n_study <- length(long30$organic_C_n_t1)
-add_row <- c("3", "Humid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("2", "Humid", "20-30 cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # 30+cm
@@ -972,18 +975,18 @@ low <- mean-se
 high <- mean+se
 obs <- sum(long30p$organic_C_n_t1)
 n_study <- length(long30p$organic_C_n_t1)
-add_row <- c("2", "Humid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("1", "Humid", "30+ cm", "long", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
-# All Long
-mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
-se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(long$organic_C_n_t1)
-n_study <- length(long$organic_C_n_t1)
-add_row <- c("1", "Humid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
-output <- rbind(output, add_row)
+# # All Long
+# mean <- check_NaN(w.mean(long$per_OC_st_change,long$organic_C_n_t1))
+# se <- check_se(w.sd(long$per_OC_st_change,long$organic_C_n_t1)/sqrt(sum(long$organic_C_n_t1)))
+# low <- mean-se
+# high <- mean+se
+# obs <- sum(long$organic_C_n_t1)
+# n_study <- length(long$organic_C_n_t1)
+# add_row <- c("1", "Humid", "Long Duration", "long", mean, se, low, high, "black", obs, n_study)
+# output <- rbind(output, add_row)
 
 # Output CSV file
 colnames(output) <- c("ID", "TopGroup", "SubGroup", "treatment", "Mean_Perc", "se", "Low_Perc", "High_Perc", "col", "obs", "n_study")

@@ -19,19 +19,32 @@ suppressWarnings(suppressMessages({
 
 ```{r}
 # Load dataset
-suppressWarnings(suppressMessages({
-    datacsv <- read_csv("datasets/irrt1vt2_estBD_mar27.csv")
-    dataset <- data.frame(datacsv)
-}))
+datacsv <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
+dataset <- data.frame(datacsv)
 
-dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
-```
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
 
-```{r}
-# Remove N+ studies where both N+ and N- plots were included
-da <- subset(dataset, N_pair=="no")
-db <- subset(dataset, N_pair_state=="N+")
-d <- rbind(da, db)
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+
+# Factor whole dataset
+#dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+d <- rbind(dataseta, datasetb)
+
+d[sapply(d, is.character)] <- lapply(d[sapply(d, is.character)], as.factor)
 
 # Separate datset into depth categories
 d10 <- subset(d, depth_cat_2=="0-10cm")

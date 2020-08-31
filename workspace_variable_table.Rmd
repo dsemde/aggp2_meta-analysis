@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Load dataset
+datacsv <- read_csv("datasets/irrt1vt2_estBD_may15.csv")
+dataset <- data.frame(datacsv)
+
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+
+# Factor whole dataset
+dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+dataset <- rbind(dataseta, datasetb)
+
+d10 <- check_split(dataset, "0-10cm")
+d20 <- check_split(dataset, "10-20cm")
+d30 <- check_split(dataset, "20-30cm")
+d30p <- check_split(dataset, "30+cm")
+```
+
+# Aridity Index
+```{r}
+aridity.lm = lm(log_organic_C_rr ~ aridity_index_study, data=dataset)
+summary(aridity.lm)
+```
+
+#Irrigation Method
+```{r}
+aov_irrig <- aov(log_organic_C_rr ~ irrig_methodcat, data = dataset)
+summary(aov_irrig)
+plot(aov_irrig, 2)
+
+TukeyHSD(aov_irrig)
+```
+```{r}
+lm_irrig <- lm(log_organic_C_rr ~ irrig_methodcat, data = dataset)
+summary(lm_irrig)
+```
+
+# Soil Texture
+```{r}
+lm_texture <- lm(log_organic_C_rr ~ soil_texture, data = dataset)
+summary(lm_texture)
+```
+
+# Irrigation Water Source
+```{r}
+lm_irrig_src <- lm(log_organic_C_rr ~ aridity_category, data = dataset)
+summary(lm_irrig_src)
+```
+
+```{r}
+lm_depth <- lm(log_organic_C_rr ~ depth_cat_2, data = dataset)
+summary(lm_depth)
+```

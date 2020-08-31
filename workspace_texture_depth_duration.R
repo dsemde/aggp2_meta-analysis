@@ -39,6 +39,9 @@ dataset <- data.frame(datacsv)
 temp_dataset <- split(dataset, dataset$ref_num=="24")
 dataset <- temp_dataset$'FALSE'
 
+temp_dataset <- split(dataset, dataset$ref_num=="19")
+dataset <- temp_dataset$'FALSE'
+
 # Factor whole dataset
 dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
 

@@ -1,0 +1,168 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Load libraries
+suppressWarnings(suppressMessages({
+    library(tidyverse)
+    library(gbm)
+    library(rsample)
+    library(missForest)
+    library(metaforest)
+}))
+```
+
+```{r}
+# Load dataset
+datacsv <- read_csv("datasets/irrt1vt2_estBD_june23.csv")
+dataset <- data.frame(datacsv)
+
+# Remove outliers
+temp_dataset <- split(dataset, dataset$ref_num=="24")
+dataset <- temp_dataset$'FALSE'
+
+# Remove outliers
+#temp_dataset <- split(dataset, dataset$ref_num=="19")
+#dataset <- temp_dataset$'FALSE'
+
+# Factor whole dataset
+#dataset[sapply(dataset, is.character)] <- lapply(dataset[sapply(dataset, is.character)], as.factor)
+
+# Store rows without N+ and N- pairings in a temporary variable
+tempData1a <- split(dataset, dataset$N_pair=="no")
+dataseta <- tempData1a$'TRUE'
+
+# For rows that do have a N+ and N- paring, store only the N- rows in a temporary variable
+tempData1b <- split(dataset, dataset$N_pair_state=="N+")
+datasetb <- tempData1b$'FALSE'
+
+# Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
+d <- rbind(dataseta, datasetb)
+
+d[sapply(d, is.character)] <- lapply(d[sapply(d, is.character)], as.factor)
+
+# Separate datset into depth categories
+d10 <- subset(d, depth_cat_2=="0-10cm")
+
+d20 <- subset(d, depth_cat_2=="10-20cm")
+
+d30 <- subset(d, depth_cat_2=="20-30cm")
+
+d30p <- subset(d, depth_cat_2=="30+cm")
+```
+
+```{r}
+vars_overall <- c("log_organic_C_rr", "aridity_index_study", "crop_type", "multiple_crops", "grazed", "cover_crop", "inorganic_N_applied", "OM_applied", "inorganic_C_applied", "years_since_irrig_t1", "study_duration", "irrig_methodcat", "irrig_water_type", "study_scale", "depth_cat_2", "soil_texture")
+
+vars_depths <- c("per_OC_st_change", "aridity_index_study", "crop_type", "multiple_crops", "grazed", "cover_crop", "inorganic_N_applied", "OM_applied", "inorganic_C_applied", "years_since_irrig_t1", "study_duration", "irrig_methodcat", "irrig_water_type", "study_scale", "soil_texture")
+```
+
+```{r}
+overall.subset <- d[names(d) %in% vars_overall]
+#d10.subset <- d10[names(d10) %in% vars_overall]
+#d20.subset <- d20[names(d20) %in% vars_overall]
+#d30.subset <- d30[names(d30) %in% vars_overall]
+#d30p.subset <- d30p[names(d30p) %in% vars_overall]
+```
+
+# Overall Dataset (not split by depth)
+```{r}
+# Make training and testing set
+set.seed(12)
+split <- initial_split(overall.subset, prop = .7)
+train <- training(split)
+test  <- testing(split)
+```
+
+Test a variety of tuning parameters to see what performs best:
+```{r}
+# create hyperparameter grid
+hyper_grid <- expand.grid(
+  shrinkage = c(.0001, .01, .001),
+  interaction.depth = c(1, 3, 6),
+  n.minobsinnode = c(3, 5, 7),
+  bag.fraction = c(.65, .8, 1), 
+  optimal_trees = 0,               # a place to dump results
+  min_RMSE = 0                     # a place to dump results
+)
+```
+
+```{r}
+# randomize data
+set.seed(12)
+random_index <- sample(1:nrow(train), nrow(train))
+random_train <- train[random_index, ]
+
+# grid search 
+for(i in 1:nrow(hyper_grid)) {
+  
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.tune <- gbm(
+    formula = log_organic_C_rr ~ .,
+    distribution = "gaussian",
+    data = random_train,
+    n.trees = 10000,
+    interaction.depth = hyper_grid$interaction.depth[i],
+    shrinkage = hyper_grid$shrinkage[i],
+    n.minobsinnode = hyper_grid$n.minobsinnode[i],
+    bag.fraction = hyper_grid$bag.fraction[i],
+    train.fraction = .75,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+  
+  # add min training error and trees to grid
+  hyper_grid$optimal_trees[i] <- which.min(gbm.tune$valid.error)
+  hyper_grid$min_RMSE[i] <- sqrt(min(gbm.tune$valid.error))
+}
+
+hyper_grid %>% 
+  dplyr::arrange(min_RMSE) %>%
+  head(10)
+```
+
+Determine Variable Importance using above results
+```{r}
+  # reproducibility
+  set.seed(123)
+  
+  # train model
+  gbm.fit.rr <- gbm(
+    formula = log_organic_C_rr ~ .,
+    distribution = "gaussian",
+    data = overall.subset,
+    n.trees = 5023,
+    interaction.depth = 6,
+    shrinkage = 0.01,
+    n.minobsinnode = 7,
+    bag.fraction = 01.0,
+    train.fraction = 1,
+    cv.folds = 5,
+    n.cores = NULL, # will use all cores by default
+    verbose = FALSE
+  )
+```
+
+Plot Variable Importance for all depths
+```{r}
+set.seed(14)
+par(mar = c(5, 12, 1, 1))
+summary(
+  gbm.fit.rr, 
+  cBars = 19,
+  method = permutation.test.gbm,
+  las = 2
+  )
+```
+
+
+
+
+
+
+
