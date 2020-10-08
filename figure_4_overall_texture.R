@@ -7,7 +7,7 @@ library(tidyverse)
 sum_data <- read.csv("datasets/overall_texture.csv")
 
 # Set TIFF output parameters
-tiff("Figure 4 - Overall Texture OC Change.tiff", width = 4, height = 3, units = 'in', res = 300)
+tiff("Figure 4 - Overall Texture OC Change Aug 31.tiff", width = 4, height = 3, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin

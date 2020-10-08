@@ -56,6 +56,9 @@ datasetb <- tempData1b$'FALSE'
 # Combine the two temporary variables into a unified dataset without the N+ treatments where such pairings exist in the dataset
 dataset <- rbind(dataseta, datasetb)
 
+dataset$irrig_water_type[dataset$irrig_water_type == "sewage"] <- "waste"
+dataset$irrig_water_type[dataset$irrig_water_type == "mixed"] <- "waste"
+
 #*********************************************************************************************************************************
 #*******************************     0 - 10 CM     *******************************************************************************
 #*********************************************************************************************************************************
@@ -71,8 +74,6 @@ dataset_10 <- datasettemp$'TRUE'
 
 fresh <- check_split_water(dataset_10, "fresh")
 waste <- check_split_water(dataset_10, "waste")
-sewage <- check_split_water(dataset_10, "sewage")
-mixed <- check_split_water(dataset_10, "mixed")
 
 # Fresh
 mean <- check_NaN(w.mean(fresh$per_OC_st_change,fresh$organic_C_n_t1))
@@ -81,7 +82,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(fresh$organic_C_n_t1)
 n_study <- length(fresh$organic_C_n_t1)
-output <- c("19", "freshity", "fresh", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
+output <- c("11", "freshity", "fresh", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
 
 # Waste
 mean <- check_NaN(w.mean(waste$per_OC_st_change,waste$organic_C_n_t1))
@@ -90,27 +91,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(waste$organic_C_n_t1)
 n_study <- length(waste$organic_C_n_t1)
-add_row <- c("18", "freshity", "waste", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# Sewage
-mean <- check_NaN(w.mean(sewage$per_OC_st_change,sewage$organic_C_n_t1))
-se <- check_se(w.sd(sewage$per_OC_st_change,sewage$organic_C_n_t1)/sqrt(sum(sewage$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(sewage$organic_C_n_t1)
-n_study <- length(sewage$organic_C_n_t1)
-add_row <- c("17", "freshity", "sewage", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# Mixed
-mean <- check_NaN(w.mean(mixed$per_OC_st_change,mixed$organic_C_n_t1))
-se <- check_se(w.sd(mixed$per_OC_st_change,mixed$organic_C_n_t1)/sqrt(sum(mixed$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(mixed$organic_C_n_t1)
-n_study <- length(mixed$organic_C_n_t1)
-add_row <- c("16", "freshity", "mixed", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("10", "freshity", "waste", "0 - 10 cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 
@@ -129,8 +110,6 @@ dataset_20 <- datasettemp$'TRUE'
 
 fresh <- check_split_water(dataset_20, "fresh")
 waste <- check_split_water(dataset_20, "waste")
-sewage <- check_split_water(dataset_20, "sewage")
-mixed <- check_split_water(dataset_20, "mixed")
 
 # fresh
 mean <- check_NaN(w.mean(fresh$per_OC_st_change,fresh$organic_C_n_t1))
@@ -139,7 +118,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(fresh$organic_C_n_t1)
 n_study <- length(fresh$organic_C_n_t1)
-add_row <- c("14", "freshity", "fresh", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("8", "freshity", "fresh", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # waste-fresh
@@ -149,27 +128,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(waste$organic_C_n_t1)
 n_study <- length(waste$organic_C_n_t1)
-add_row <- c("13", "freshity", "waste", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# Dry sub-mixed
-mean <- check_NaN(w.mean(sewage$per_OC_st_change,sewage$organic_C_n_t1))
-se <- check_se(w.sd(sewage$per_OC_st_change,sewage$organic_C_n_t1)/sqrt(sum(sewage$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(sewage$organic_C_n_t1)
-n_study <- length(sewage$organic_C_n_t1)
-add_row <- c("12", "freshity", "sewage", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# mixed
-mean <- check_NaN(w.mean(mixed$per_OC_st_change,mixed$organic_C_n_t1))
-se <- check_se(w.sd(mixed$per_OC_st_change,mixed$organic_C_n_t1)/sqrt(sum(mixed$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(mixed$organic_C_n_t1)
-n_study <- length(mixed$organic_C_n_t1)
-add_row <- c("11", "freshity", "mixed", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("7", "freshity", "waste", "10 - 20 cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 
@@ -189,8 +148,6 @@ dataset_30 <- datasettemp$'TRUE'
 
 fresh <- check_split_water(dataset_30, "fresh")
 waste <- check_split_water(dataset_30, "waste")
-sewage <- check_split_water(dataset_30, "sewage")
-mixed <- check_split_water(dataset_30, "mixed")
 
 # fresh
 mean <- check_NaN(w.mean(fresh$per_OC_st_change,fresh$organic_C_n_t1))
@@ -199,7 +156,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(fresh$organic_C_n_t1)
 n_study <- length(fresh$organic_C_n_t1)
-add_row <- c("9", "freshity", "fresh", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("5", "freshity", "fresh", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # waste-fresh
@@ -209,27 +166,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(waste$organic_C_n_t1)
 n_study <- length(waste$organic_C_n_t1)
-add_row <- c("8", "freshity", "waste", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# Dry sub-mixed
-mean <- check_NaN(w.mean(sewage$per_OC_st_change,sewage$organic_C_n_t1))
-se <- check_se(w.sd(sewage$per_OC_st_change,sewage$organic_C_n_t1)/sqrt(sum(sewage$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(sewage$organic_C_n_t1)
-n_study <- length(sewage$organic_C_n_t1)
-add_row <- c("7", "freshity", "sewage", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# mixed
-mean <- check_NaN(w.mean(mixed$per_OC_st_change,mixed$organic_C_n_t1))
-se <- check_se(w.sd(mixed$per_OC_st_change,mixed$organic_C_n_t1)/sqrt(sum(mixed$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(mixed$organic_C_n_t1)
-n_study <- length(mixed$organic_C_n_t1)
-add_row <- c("6", "freshity", "mixed", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("4", "freshity", "waste", "20 - 30 cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 
@@ -250,8 +187,6 @@ dataset_30p <- datasettemp$'TRUE'
 
 fresh <- check_split_water(dataset_30p, "fresh")
 waste <- check_split_water(dataset_30p, "waste")
-sewage <- check_split_water(dataset_30p, "sewage")
-mixed <- check_split_water(dataset_30p, "mixed")
 
 # fresh
 mean <- check_NaN(w.mean(fresh$per_OC_st_change,fresh$organic_C_n_t1))
@@ -260,7 +195,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(fresh$organic_C_n_t1)
 n_study <- length(fresh$organic_C_n_t1)
-add_row <- c("4", "freshity", "fresh", "30+ cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("2", "freshity", "fresh", "30+ cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 # waste-fresh
@@ -270,27 +205,7 @@ low <- mean-se
 high <- mean+se
 obs <- sum(waste$organic_C_n_t1)
 n_study <- length(waste$organic_C_n_t1)
-add_row <- c("3", "freshity", "waste", "30+ cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# Dry sub-mixed
-mean <- check_NaN(w.mean(sewage$per_OC_st_change,sewage$organic_C_n_t1))
-se <- check_se(w.sd(sewage$per_OC_st_change,sewage$organic_C_n_t1)/sqrt(sum(sewage$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(sewage$organic_C_n_t1)
-n_study <- length(sewage$organic_C_n_t1)
-add_row <- c("2", "freshity", "sewage", "30+ cm", mean, se, low, high, "orange", obs, n_study)
-output <- rbind(output, add_row)
-
-# mixed
-mean <- check_NaN(w.mean(mixed$per_OC_st_change,mixed$organic_C_n_t1))
-se <- check_se(w.sd(mixed$per_OC_st_change,mixed$organic_C_n_t1)/sqrt(sum(mixed$organic_C_n_t1)))
-low <- mean-se
-high <- mean+se
-obs <- sum(mixed$organic_C_n_t1)
-n_study <- length(mixed$organic_C_n_t1)
-add_row <- c("1", "freshity", "mixed", "30+ cm", mean, se, low, high, "orange", obs, n_study)
+add_row <- c("1", "freshity", "waste", "30+ cm", mean, se, low, high, "orange", obs, n_study)
 output <- rbind(output, add_row)
 
 

@@ -12,7 +12,7 @@ sum_data <- read.csv("datasets/semiarid_0_10_duration.csv")
 #long <- as.data.frame(d[1])
 
 # Set TIFF output parameters
-tiff("Figure 5 - OC Stock Semi-arid 0 to 10 by Duration.tiff", width = 4, height = 3.5, units = 'in', res = 300)
+tiff("Figure 5 - OC Stock Semi-arid 0 to 10 by Duration Aug 31.tiff", width = 4, height = 3.5, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin

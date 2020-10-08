@@ -4,12 +4,12 @@ library(car)
 library(tidyverse)
 
 
-sum_data <- read.csv("datasets/water_source_depth_floodfurr.csv")
+sum_data <- read.csv("datasets/water_source_depth.csv")
 
 
 
 # Set TIFF output parameters
-tiff("Figure x - Water Source by Depth FloodFurr.tiff", width = 4, height = 4, units = 'in', res = 300)
+tiff("Figure x - Water Source by Depth.tiff", width = 4, height = 4, units = 'in', res = 300)
 
 par( mar=c(0.2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
@@ -64,9 +64,9 @@ abline(h=c(3, 6, 9), col="black", lty=3, lwd=2)
 mtext("Irrigation Water Type", side=2, cex=0.75, line=3.5)
 mtext(side = 1, text = paste("Soil carbon stocks (% change)", sep=" "), line = 1, cex=0.75, outer = T)
 
-# mtext("0 - 10 cm", side=4, cex=0.75, adj=0.91)
-# mtext("10 - 20 cm", side=4, cex=0.75, adj=0.63)
-# mtext("20 - 30 cm", side=4, cex=0.75, adj=0.35)
-# mtext("30+ cm", side=4, cex=0.75, adj=0.10)
+mtext("0 - 10 cm", side=4, cex=0.75, adj=0.98)
+mtext("10 - 20 cm", side=4, cex=0.75, adj=0.68)
+mtext("20 - 30 cm", side=4, cex=0.75, adj=0.33)
+mtext("30+ cm", side=4, cex=0.75, adj=0.04)
 
 dev.off()

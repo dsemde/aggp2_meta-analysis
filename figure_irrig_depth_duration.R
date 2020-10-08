@@ -14,7 +14,7 @@ datasettemp <- split(sum_data, sum_data$TopGroup=="Flood/Furrow")
 floodfurr <- datasettemp$'TRUE'
 
 # Set TIFF output parameters
-tiff("OC Stock Irrigation Depth Duration.tiff", width = 9, height = 4, units = 'in', res = 300)
+tiff("Figure S9 - OC Stock Irrigation Depth Duration.tiff", width = 9, height = 4, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin

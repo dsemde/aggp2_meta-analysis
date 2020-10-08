@@ -14,7 +14,7 @@ datasettemp <- split(sum_data, sum_data$TopGroup=="Fine")
 fine <- datasettemp$'TRUE'
 
 # Set TIFF output parameters
-tiff("OC Stock Texture Depth Duration.tiff", width = 9, height = 4, units = 'in', res = 300)
+tiff("Figure S8 - OC Stock Texture Depth Duration.tiff", width = 9, height = 4, units = 'in', res = 300)
 
 par( mar=c(2, 0.2, 0.2, 0.2)
      , mai=c(0.15, 0.1, 0.1, 0.1)  # by inches, inner margin
